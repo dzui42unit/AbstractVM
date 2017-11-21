@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "IOperand.h"
-#include "Int8.h"
+#include "Operand.h"
 
 void	add_ints(int lhs, int rhs)
 {
@@ -34,12 +34,16 @@ void	add_ints(int lhs, int rhs)
 
 int		main(void)
 {
-	std::shared_ptr<Int8> n1(new Int8(35));
-	std::shared_ptr<Int8> n2(new Int8(12));
-	std::cout << "n1: " << n1->getValue() << std::endl;
-	std::cout << "n2: " << n2->getValue() << std::endl;
-	*n1 = *(*n1 + *n2);
-	std::cout << "n1: " << n1->getValue() << std::endl;
-	std::cout << "n2: " << n2->getValue() << std::endl;
+	Operand<char>	i("-41");
+	Operand<double> d("45.2");
+	Operand<short>	c("-423");
+
+//	std::cout << "CHAR object = " << i.toString() << std::endl;
+//	std::cout << "DOUBLE object = " << d.toString() << std::endl;
+//	std::cout << "CHAR object = " << c.toString() << std::endl;
+
+	Operand<int> kek;
+	kek = *(i + c);
+	std::cout << "int that stores result of addition of two chars: " << kek.toString() << std::endl;
 	return (0);
 }

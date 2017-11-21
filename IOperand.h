@@ -19,7 +19,6 @@
 
 
 enum eOperandType { _Int8, _Int16, _Int32, _Float, _Double };
-enum eOperandPrec { _Int8Pr, _Int16Pr, _Int32Pr, _FloatPr, _DoublePr };
 
 class 							IOperand
 {
