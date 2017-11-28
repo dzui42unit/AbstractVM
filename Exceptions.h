@@ -7,37 +7,25 @@
 class				Overflow : public std::exception
 {
 public:
-	const char 	*what() const throw() override
-	{
-		return ("Type Overflow occurred.");
-	}
+	const char 	*what() const throw() override;
 };
 
 class				Underflow : public std::exception
 {
 public:
-	const char 	*what() const throw() override
-	{
-		return ("Type Underflow occurred.");
-	}
+	const char 	*what() const throw() override;
 };
 
 class				ZeroDiv : public std::exception
 {
 public:
-	const char 	*what() const throw() override
-	{
-		return ("Zero as a second argument in division operation occurred.");
-	}
+	const char 	*what() const throw() override;
 };
 
 class				ZeroMod : public std::exception
 {
 public:
-	const char 	*what() const throw() override
-	{
-		return ("Zero as a second argument in modulus operation occurred.");
-	}
+	const char 	*what() const throw() override;
 };
 
 #endif //ABSTRACTVM_EXCEPTIONS_H

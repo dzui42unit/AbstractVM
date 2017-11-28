@@ -6,13 +6,13 @@
 #    By: dzui <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/01 15:02:50 by dzui              #+#    #+#              #
-#    Updated: 2017/11/28 18:43:37 by dzui             ###   ########.fr        #
+#    Updated: 2017/11/28 19:14:32 by dzui             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = avm
 
-SRC =  main.cpp OperandFactory.cpp
+SRC =  main.cpp OperandFactory.cpp Exceptions.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

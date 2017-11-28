@@ -15,5 +15,10 @@
 
 int		main(void)
 {
+	IOperand *one = new Operand<int>("12");
+	IOperand *two = new Operand<int>("0");
+
+	*one / *two;
+
 	return (0);
 }
