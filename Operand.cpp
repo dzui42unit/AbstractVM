@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "Operand.h"
+#include "Exceptions.h"
 
 // check if the overflow can take place
 
@@ -22,12 +23,12 @@ void 				Operand<T>::CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op
 		if (nb1 > 0)
 		{
 			if (std::numeric_limits<T>::max() - nb1 < nb2)
-				throw (Operand<T>::Overflow());
+				throw (Overflow());
 		}
 		else
 		{
 			if (std::numeric_limits<T>::min() - nb1 >= nb2)
-				throw (Operand<T>::Underflow());
+				throw (Underflow());
 		}
 	}
 	if (op == Sub)
@@ -35,38 +36,38 @@ void 				Operand<T>::CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op
 		if (nb2 < 0)
 		{
 			if (std::numeric_limits<T>::max() + nb2 < nb1)
-				throw (Operand<T>::Overflow());
+				throw (Overflow());
 		}
 		else
 		{
 			if (std::numeric_limits<T>::min() + nb2 > nb1)
-				throw (Operand<T>::Underflow());
+				throw (Underflow());
 		}
 	}
 	if (op == Mul)
 	{
 		if (nb1 == -1 && (nb2 == std::numeric_limits<T>::min()))
-			throw (Operand<T>::Underflow());
+			throw (Underflow());
 		if (nb2 == -1 && (nb1 == std::numeric_limits<T>::min()))
-			throw (Operand<T>::Underflow());
+			throw (Underflow());
 		if (nb1 > std::numeric_limits<T>::max() / nb2)
-			throw (Operand<T>::Overflow());
+			throw (Overflow());
 		if (nb1 < std::numeric_limits<T>::min() / nb2)
-			throw (Operand<T>::Underflow());
+			throw (Underflow());
 	}
 	if (op == Div)
 	{
 		if (nb1 == -1 && nb2 == std::numeric_limits<T>::min())
-			throw (Operand<T>::Underflow());
+			throw (Underflow());
 		if (nb2 == -1 && nb1 == std::numeric_limits<T>::min())
-			throw (Operand<T>::Underflow());
+			throw (Underflow());
 	}
 	if (op == Mod)
 	{
 		if (nb1 == -1 && nb2 == std::numeric_limits<T>::min())
-			throw (Operand<T>::Underflow());
+			throw (Underflow());
 		if (nb2 == -1 && nb1 == std::numeric_limits<T>::min())
-			throw (Operand<T>::Underflow());
+			throw (Underflow());
 	}
 }
 
