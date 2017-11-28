@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "Operand.h"
+#include "OperandFactory.h"
 
 int		main(void)
 {
-	std::cout << "Hello, World!\n";
 	return (0);
 }

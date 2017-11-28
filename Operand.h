@@ -14,6 +14,7 @@
 #define ABSTRACTVM_OPERAND_H
 
 #include "IOperand.h"
+#include <cmath>
 
 template < typename T >
 class Operand : public IOperand
@@ -25,7 +26,7 @@ private:
 	std::string			str_val;
 	eOperandType 		SpecifyType();
 	T					AssignValue();
-	int 				CheckOverUnderFlowOperation(T nb1, T nb2, char op) const;
+	void 				CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op) const;
 public:
 						Operand();
 	explicit			Operand(std::string const &val);
@@ -83,6 +84,9 @@ public:
 #include "Operand.cpp"
 #include "OperandCanonical.cpp"
 #include "OperandPlusOverload.cpp"
-
+#include "OperandMinusOverload.cpp"
+#include "OperandMulOverload.cpp"
+#include "OperandDivOverload.cpp"
+#include "OperandModulOverload.cpp"
 
 #endif

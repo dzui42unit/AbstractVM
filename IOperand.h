@@ -14,11 +14,13 @@
 #define ABSTRACTVM_IOPERAND_H
 
 #include <string>
+#include <vector>
 #include <iostream>
 #include <exception>
 
 
 enum eOperandType { _Int8, _Int16, _Int32, _Float, _Double };
+enum eOperationType { Add, Sub, Mul, Div, Mod };
 
 class 							IOperand
 {

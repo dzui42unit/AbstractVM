@@ -1,21 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   OperandPlusOverload.cpp                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/22 19:48:42 by dzui              #+#    #+#             */
-/*   Updated: 2017/11/22 19:48:45 by dzui             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "Operand.h"
 
-// addition operator overloading
-
-template 			< typename T >
-IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
+template 			< typename T>
+IOperand const 		*Operand<T>::operator*(IOperand const &rhs) const
 {
 	int 			type;
 	IOperand		*new_obj;
@@ -31,7 +18,7 @@ IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
 		{
 			lhs_val = static_cast<char>(std::stoi(this->toString()));
 			rhs_val = static_cast<char>(std::stoi(rhs.toString()));
-			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Add);
+			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mul);
 		}
 		catch (Underflow &uf)
 		{
@@ -43,7 +30,7 @@ IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
 			std::cout << of.what() << std::endl;
 			exit(0);
 		}
-		new_obj = new Operand<char>(std::to_string(lhs_val + rhs_val));
+		new_obj = new Operand<char>(std::to_string(lhs_val * rhs_val));
 	}
 	if (type == _Int16)
 	{
@@ -54,7 +41,7 @@ IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
 		{
 			lhs_val = static_cast<short>(std::stoi(this->toString()));
 			rhs_val = static_cast<short>(std::stoi(rhs.toString()));
-			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Add);
+			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mul);
 		}
 		catch (Underflow &uf)
 		{
@@ -66,7 +53,7 @@ IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
 			std::cout << of.what() << std::endl;
 			exit(0);
 		}
-		new_obj = new Operand<short>(std::to_string(lhs_val + rhs_val));
+		new_obj = new Operand<short>(std::to_string(lhs_val * rhs_val));
 	}
 	if (type == _Int32)
 	{
@@ -77,7 +64,7 @@ IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
 		{
 			lhs_val = std::stoi(this->toString());
 			rhs_val = std::stoi(rhs.toString());
-			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Add);
+			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mul);
 		}
 		catch (Underflow &uf)
 		{
@@ -89,7 +76,7 @@ IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
 			std::cout << of.what() << std::endl;
 			exit(0);
 		}
-		new_obj = new Operand<int>(std::to_string(lhs_val + rhs_val));
+		new_obj = new Operand<int>(std::to_string(lhs_val * rhs_val));
 	}
 	if (type == _Float)
 	{
@@ -100,7 +87,7 @@ IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
 		{
 			lhs_val = std::stof(this->toString());
 			rhs_val = std::stof(rhs.toString());
-			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Add);
+			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mul);
 		}
 		catch (Underflow &uf)
 		{
@@ -112,7 +99,7 @@ IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
 			std::cout << of.what() << std::endl;
 			exit(0);
 		}
-		new_obj = new Operand<float>(std::to_string(lhs_val + rhs_val));
+		new_obj = new Operand<float>(std::to_string(lhs_val * rhs_val));
 	}
 	if (type == _Double)
 	{
@@ -123,7 +110,7 @@ IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
 		{
 			lhs_val = std::stod(this->toString());
 			rhs_val = std::stod(rhs.toString());
-			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Add);
+			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mul);
 		}
 		catch (Underflow &uf)
 		{
@@ -135,7 +122,8 @@ IOperand const 		*Operand<T>::operator+(IOperand const &rhs) const
 			std::cout << of.what() << std::endl;
 			exit(0);
 		}
-		new_obj = new Operand<double>(std::to_string(lhs_val + rhs_val));
+		new_obj = new Operand<double>(std::to_string(lhs_val * rhs_val));
 	}
 	return (new_obj);
 }
+

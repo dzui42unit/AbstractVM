@@ -12,90 +12,62 @@
 
 #include "Operand.h"
 
+// check if the overflow can take place
+
 template 			< typename T >
-int 				Operand<T>::CheckOverUnderFlowOperation(T nb1, T nb2, char op) const
+void 				Operand<T>::CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op) const
 {
-	if (op == '+')
+	if (op == Add)
 	{
 		if (nb1 > 0)
 		{
 			if (std::numeric_limits<T>::max() - nb1 < nb2)
-				return (1);
+				throw (Operand<T>::Overflow());
 		}
 		else
 		{
-			if (std::numeric_limits<T>::min() - nb1 > nb2)
-				return (2);
+			if (std::numeric_limits<T>::min() - nb1 >= nb2)
+				throw (Operand<T>::Underflow());
 		}
 	}
-	if (op == '-')
+	if (op == Sub)
 	{
-		if (nb1 < 0)
+		if (nb2 < 0)
 		{
-			if (std::numeric_limits<T>::max() + nb1 < nb2)
-				return (1);
+			if (std::numeric_limits<T>::max() + nb2 < nb1)
+				throw (Operand<T>::Overflow());
 		}
 		else
 		{
-			if (std::numeric_limits<T>::min() + nb1 > nb2)
-				return (2);
+			if (std::numeric_limits<T>::min() + nb2 > nb1)
+				throw (Operand<T>::Underflow());
 		}
 	}
-	if (op == '*')
+	if (op == Mul)
 	{
-		if (nb1 > std::numeric_limits<T>::max() / nb2)
-			return (1);
-		if (nb1 < std::numeric_limits<T>::min() / nb2)
-			return (2);
 		if (nb1 == -1 && (nb2 == std::numeric_limits<T>::min()))
-			return (1);
+			throw (Operand<T>::Underflow());
 		if (nb2 == -1 && (nb1 == std::numeric_limits<T>::min()))
-			return (1);
+			throw (Operand<T>::Underflow());
+		if (nb1 > std::numeric_limits<T>::max() / nb2)
+			throw (Operand<T>::Overflow());
+		if (nb1 < std::numeric_limits<T>::min() / nb2)
+			throw (Operand<T>::Underflow());
 	}
-	if (op == '/')
+	if (op == Div)
 	{
 		if (nb1 == -1 && nb2 == std::numeric_limits<T>::min())
-			return (1);
+			throw (Operand<T>::Underflow());
 		if (nb2 == -1 && nb1 == std::numeric_limits<T>::min())
-			return (1);
+			throw (Operand<T>::Underflow());
 	}
-	return (0);
-}
-
-template 			< typename T>
-IOperand const 		*Operand<T>::operator-(IOperand const &rhs) const
-{
-	eOperandType 	type;
-	IOperand		*new_obj;
-
-	return (new_obj);
-}
-
-template 			< typename T>
-IOperand const 		*Operand<T>::operator/(IOperand const &rhs) const
-{
-	eOperandType 	type;
-	IOperand		*new_obj;
-
-	return (new_obj);
-}
-
-template 			< typename T>
-IOperand const 		*Operand<T>::operator*(IOperand const &rhs) const
-{
-	eOperandType 	type;
-	IOperand		*new_obj;
-
-	return (new_obj);
-}
-
-template 			< typename T>
-IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
-{
-	eOperandType 	type;
-	IOperand		*new_obj;
-
-	return (new_obj);
+	if (op == Mod)
+	{
+		if (nb1 == -1 && nb2 == std::numeric_limits<T>::min())
+			throw (Operand<T>::Underflow());
+		if (nb2 == -1 && nb1 == std::numeric_limits<T>::min())
+			throw (Operand<T>::Underflow());
+	}
 }
 
 // returns a value of an instance as a string
@@ -142,7 +114,7 @@ eOperandType 		Operand<T>::getType() const
 	return (type);
 }
 
-// assigns a value taking inro account its type
+// assigns a value taking into account its type
 
 template 			< typename T >
 T 					Operand<T>::AssignValue()
