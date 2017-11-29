@@ -15,13 +15,16 @@
 
 // constructor that initializes the vector of pointers to a member function;
 
-OperandFactory::OperandFactory()
+OperandFactory::OperandFactory() : ptrs_nb(5)
 {
-	vec.push_back((&OperandFactory::createInt8));
-	vec.push_back((&OperandFactory::createInt16));
-	vec.push_back((&OperandFactory::createInt32));
-	vec.push_back((&OperandFactory::createFloat));
-	vec.push_back((&OperandFactory::createDouble));
+
+	create_ptrs = new create_func[ptrs_nb];
+
+	create_ptrs[0] = &OperandFactory::createInt8;
+	create_ptrs[1] = &OperandFactory::createInt16;
+	create_ptrs[2] = &OperandFactory::createInt32;
+	create_ptrs[3] = &OperandFactory::createFloat;
+	create_ptrs[4] = &OperandFactory::createDouble;
 }
 
 // creates a new operand taking into account its type
@@ -30,7 +33,7 @@ IOperand const	*OperandFactory::createOperand(eOperandType type, std::string con
 {
 	IOperand const *new_obj;
 
-	new_obj = dynamic_cast<const IOperand *>((this->*vec[type])(value));
+	new_obj = dynamic_cast<const IOperand *>((this->*create_ptrs[type])(value));
 	return (new_obj);
 }
 
@@ -38,24 +41,28 @@ IOperand const	*OperandFactory::createOperand(eOperandType type, std::string con
 
 OperandFactory::~OperandFactory()
 {
-
+	delete  create_ptrs;
 }
 
 // copy constructor
 
 OperandFactory::OperandFactory(OperandFactory const &of)
 {
-	for (auto i : of.vec)
-		vec.push_back(i);
+	ptrs_nb = of.ptrs_nb;
+	create_ptrs = new create_func[ptrs_nb];
+	for (int i = 0; i < ptrs_nb; i++)
+		create_ptrs[i] = of.create_ptrs[i];
 }
 
 // assignment operator overloading
 
 OperandFactory& OperandFactory::operator=(OperandFactory const &of)
 {
-	vec.clear();
-	for (auto i : of.vec)
-		vec.push_back(i);
+	delete create_ptrs;
+	ptrs_nb = of.ptrs_nb;
+	create_ptrs = new create_func[ptrs_nb];
+	for (int i = 0; i < ptrs_nb; i++)
+		create_ptrs[i] = of.create_ptrs[i];
 	return (*this);
 }
 

@@ -29,7 +29,8 @@ public:
 
 private:
 
-	std::vector< create_func > 		vec;																	// stores pointers to a functions
+	create_func 					*create_ptrs;															// stores pointers to a functions
+	int 							ptrs_nb;																// number of pointers to a function
 
 	IOperand	const				*createInt8(std::string const & value) const;							// creates a Operand<char> object
 	IOperand	const 				*createInt16(std::string const & value) const;							// creates a Operand<short> object

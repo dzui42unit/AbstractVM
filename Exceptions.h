@@ -28,4 +28,4 @@ public:
 	const char 	*what() const throw() override;
 };
 
-#endif //ABSTRACTVM_EXCEPTIONS_H
+#endif
