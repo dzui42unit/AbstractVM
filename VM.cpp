@@ -13,6 +13,57 @@
 
 #include "VM.h"
 
+// fills a vector of the pairs that represents an instruction and its argument
+
+void		VM::MakeInstructoinsSet(void)
+{
+	std::vector<std::string>	temp;
+
+	for (auto &elem : input_file)
+	{
+		SplitString(temp, elem, ' ');
+		instr_args.emplace_back(temp[0], temp[1]);
+		temp.clear();
+	}
+}
+
+// returns a vector of pairs that represent instructions
+
+std::vector<std::pair<std::string, std::string> > VM::getInstrSet() const
+{
+	return (this->instr_args);
+}
+
+// splits a string by a delimiter and writes it in a vector
+
+void 		VM::SplitString(std::vector<std::string> &res, std::string str, char del)
+{
+	size_t pos;
+
+	pos = str.find_first_of(del);
+
+	if (pos == std::string::npos)
+	{
+		res.emplace_back(RemoveSpaces(str));
+		res.emplace_back("");
+	}
+	else
+	{
+		res.emplace_back(RemoveSpaces(std::string(str.begin(), str.begin() + pos)));
+		res.emplace_back(RemoveSpaces(std::string(str.begin() + pos + 1, str.end())));
+	}
+}
+
+// removes all the whitespaces that are present in the string
+
+std::string		VM::RemoveSpaces(std::string str)
+{
+	str.erase(std::remove_if(str.begin(), str.end(), [](char ch) -> bool{
+			return (std::isspace(ch));
+		}), str.end());
+	return (str);
+}
+
 // returns a content of a file
 
 std::vector<std::string>	VM::FileContetnt() const
@@ -124,6 +175,9 @@ VM::VM(std::string f_name)
 	{
 		while (std::getline(inp, buff))
 			input_file.push_back(buff);
+
+		pattern_n = new std::regex("[(][-]?[0-9]+[)]");
+		pattern_z = new std::regex("[(][-]?[0-9]+.[0-9]+[)]");
 	}
 	else
 	{
@@ -156,5 +210,6 @@ VM 	&VM::operator=(VM const &vm)
 
 VM::~VM()
 {
-
+	delete pattern_n;
+	delete pattern_z;
 }

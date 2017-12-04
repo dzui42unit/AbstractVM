@@ -18,27 +18,37 @@
 #include "OperandFactory.h"
 #include <memory>
 #include <stack>
+#include <utility>
 #include <fstream>
+#include <regex>
 
-class 										VM
+class 													VM
 {
 private:
-	std::vector<std::string>				input_file;
-	std::shared_ptr<OperandFactory>			factory;
-	std::stack< std::shared_ptr<IOperand> >	val_stack;
+	std::vector<std::string>							input_file;
+	std::shared_ptr<OperandFactory>						factory;
+	std::stack< std::shared_ptr<IOperand> >				val_stack;
+	std::vector<std::pair<std::string, std::string> >	instr_args;
+	std::regex 											*pattern_n;
+	std::regex 											*pattern_z;
 
 
 public:
-											VM();
-	explicit								VM(std::string f_name);
-											~VM();
-											VM(VM const &vm);
-	VM 										&operator=(VM const &vm);
-	std::vector<std::string>				FileContetnt(void) const;
-	void									RemoveComment(void);
-	void									WhitesSpaceToSpace(void);
-	void									UniqueWhiteSpaces(void);
-	void 									RemoveBlankString(void);
+														VM();
+	explicit											VM(std::string f_name);
+														~VM();
+														VM(VM const &vm);
+	VM 													&operator=(VM const &vm);
+	std::vector<std::string>							FileContetnt(void) const;
+	std::string											RemoveSpaces(std::string str);
+	void												MakeInstructoinsSet(void);
+	void												RemoveComment(void);
+	void												WhitesSpaceToSpace(void);
+	void												UniqueWhiteSpaces(void);
+	void 												RemoveBlankString(void);
+	std::vector<std::pair<std::string, std::string> >	getInstrSet() const;
+	void												SplitString(std::vector<std::string> &res, std::string str, char del);
+
 };
 
 

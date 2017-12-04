@@ -43,6 +43,52 @@ public:
 	IOperand const 		*operator*(IOperand const &rhs) const override;
 	IOperand const 		*operator/(IOperand const &rhs) const override;
 	IOperand const 		*operator%(IOperand const &rhs) const override;
+
+	class				Overflow : public std::exception
+	{
+	public:
+		const char 	*what() const throw() override
+		{
+			return ("Type Overflow occurred.");
+		}
+
+	};
+
+	class				Underflow : public std::exception
+	{
+	public:
+		const char 	*what() const throw() override
+		{
+			return ("Type Underflow occurred.");
+		}
+	};
+
+	class				ZeroDiv : public std::exception
+	{
+	public:
+		const char 	*what() const throw() override
+		{
+			return ("Zero as a second argument in division operation occurred.");
+		}
+	};
+
+	class				ZeroMod : public std::exception
+	{
+	public:
+		const char 	*what() const throw() override
+		{
+			return ("Zero as a second argument in modulus operation occurred.");
+		}
+	};
+
+	class				OutOfRange : public std::exception
+	{
+	public:
+		const char 	*what() const throw() override
+		{
+			return ("Out of range exception occurred.");
+		}
+	};
 };
 
 #include "Operand.cpp"

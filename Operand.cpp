@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "Operand.h"
-#include "Exceptions.h"
 
 // check if the overflow can take place
 
@@ -122,15 +121,50 @@ T 					Operand<T>::AssignValue()
 {
 	T res;
 
-	if (type == _Int8)
-		res = static_cast<char>(std::stoi(str_val));
-	if (type == _Int16)
-		res = static_cast<short>(std::stoi(str_val));
-	if (type == _Int32)
-		res = std::stoi(str_val);
-	if (type == _Float)
-		res = std::stof(str_val);
-	if (type == _Double)
-		res = std::stod(str_val);
+	try
+	{
+		if (type == _Int8)
+		{
+			if (std::numeric_limits<char>::min() < std::stoll(str_val)
+				&& std::stoll(str_val) > std::numeric_limits<char>::max())
+				throw (OutOfRange());
+			res = static_cast<char>(std::stoll(str_val));
+		}
+		if (type == _Int16)
+		{
+			if (std::numeric_limits<short>::min() < std::stoll(str_val)
+				&& std::stoll(str_val) > std::numeric_limits<short>::max())
+				throw (OutOfRange());
+			res = static_cast<short>(std::stoll(str_val));
+
+		}
+		if (type == _Int32)
+		{
+			if (std::numeric_limits<int>::min() < std::stoll(str_val)
+				&& std::stoll(str_val) > std::numeric_limits<int>::max())
+				throw (OutOfRange());
+			res = std::stoll(str_val);
+		}
+		if (type == _Float)
+		{
+			if (std::numeric_limits<float>::min() < std::stold(str_val)
+				&& std::stold(str_val) > std::numeric_limits<float >::max())
+				throw (OutOfRange());
+			res = static_cast<float>(std::stold(str_val));
+
+		}
+		if (type == _Double)
+		{
+			if (std::numeric_limits<double>::min() < std::stold(str_val)
+				&& std::stold(str_val) > std::numeric_limits<double>::max())
+				throw (OutOfRange());
+			res = static_cast<double>(std::stold(str_val));
+		}
+	}
+	catch (OutOfRange &e)
+	{
+		std::cout << e.what() << std::endl;
+		exit(0);
+	}
 	return (res);
 }

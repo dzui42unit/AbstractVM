@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "VM.h"
-
 int		main(int argc, char **argv)
 {
+
 	std::vector<std::shared_ptr<VM>>		run_vm;
 
 	if (argc == 1)
@@ -31,22 +31,15 @@ int		main(int argc, char **argv)
 		}
 		for (int i = 0; i < argc - 1; i++)
 		{
-			std::vector<std::string> info = (*run_vm[i]).FileContetnt();
-			std::cout << std::endl << std::endl << "Files content:" << std::endl;
-			for (const auto &j : info)
-				std::cout << "|" << j << "|" << std::endl;
+			std::cout << std::endl << "Files content:" << std::endl;
 			(*run_vm[i]).RemoveComment();
 			(*run_vm[i]).WhitesSpaceToSpace();
 			(*run_vm[i]).UniqueWhiteSpaces();
+			(*run_vm[i]).MakeInstructoinsSet();
+			std::vector<std::pair<std::string, std::string> > info = (*run_vm[i]).getInstrSet();
+			for (auto &j : info)
+				std::cout << "|" << j.first << "| - |" << j.second << "|" << std::endl;
 		}
-		for (int i = 0; i < argc - 1; i++)
-		{
-			std::cout << std::endl << std::endl << "Files content:" << std::endl;
-			std::vector<std::string> info = (*run_vm[i]).FileContetnt();
-			for (const auto &j : info)
-				std::cout << "|" << j << "|" << std::endl;
-		}
-
 	}
 	return (0);
 }
