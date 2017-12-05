@@ -168,3 +168,9 @@ T 					Operand<T>::AssignValue()
 	}
 	return (res);
 }
+
+template < typename T >
+void Operand<T>::setFactoryPtr(std::shared_ptr<OperandFactory> ptr)
+{
+	this->factory_ptr = ptr;
+}

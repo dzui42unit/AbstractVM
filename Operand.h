@@ -15,18 +15,21 @@
 
 #include "IOperand.h"
 #include <cmath>
+#include "OperandFactory.h"
+#include <memory>
 
 template < typename T >
 class Operand : public IOperand
 {
 private:
-	T 					value;
-	int 				precision;
-	eOperandType 		type;
-	std::string			str_val;
-	eOperandType 		SpecifyType();
-	T					AssignValue();
-	void 				CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op) const;
+	T 								value;
+	int 							precision;
+	eOperandType 					type;
+	std::string						str_val;
+	eOperandType 					SpecifyType();
+	T								AssignValue();
+	void 							CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op) const;
+	std::shared_ptr<OperandFactory> factory_ptr;
 public:
 						Operand();
 	explicit			Operand(std::string const &val);
@@ -37,6 +40,7 @@ public:
 	eOperandType 		getType(void) const override;
 	int					getPrecision(void) const override;
 	std::string const	&toString() const override;
+	void				setFactoryPtr(std::shared_ptr<OperandFactory> ptr);
 
 	IOperand const 		*operator+(IOperand const &rhs) const override;
 	IOperand const 		*operator-(IOperand const &rhs) const override;
@@ -80,7 +84,6 @@ public:
 			return ("Zero as a second argument in modulus operation occurred.");
 		}
 	};
-
 	class				OutOfRange : public std::exception
 	{
 	public:

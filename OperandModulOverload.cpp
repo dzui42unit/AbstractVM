@@ -17,7 +17,7 @@ template 			< typename T>
 IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
 {
 	int 			type;
-	IOperand		*new_obj;
+	const IOperand	*new_obj;
 
 	new_obj = nullptr;
 	type = getPrecision() > rhs.getPrecision() ? getPrecision() : rhs.getPrecision();
@@ -49,7 +49,7 @@ IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
 			std::cout << zd.what() << std::endl;
 			exit(0);
 		}
-		new_obj = new Operand<char>(std::to_string(lhs_val % rhs_val));
+		new_obj = factory_ptr->createOperand(_Int8, std::to_string(lhs_val % rhs_val));
 	}
 	if (type == _Int16)
 	{
@@ -79,7 +79,7 @@ IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
 			std::cout << zd.what() << std::endl;
 			exit(0);
 		}
-		new_obj = new Operand<short>(std::to_string(lhs_val % rhs_val));
+		new_obj = factory_ptr->createOperand(_Int16, std::to_string(lhs_val % rhs_val));
 	}
 	if (type == _Int32)
 	{
@@ -109,7 +109,7 @@ IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
 			std::cout << zd.what() << std::endl;
 			exit(0);
 		}
-		new_obj = new Operand<int>(std::to_string(lhs_val % rhs_val));
+		new_obj = factory_ptr->createOperand(_Int32, std::to_string(lhs_val % rhs_val));
 	}
 	if (type == _Float)
 	{
@@ -139,7 +139,7 @@ IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
 			std::cout << zd.what() << std::endl;
 			exit(0);
 		}
-		new_obj = new Operand<float>(std::to_string(fmodf(lhs_val, rhs_val)));
+		new_obj = factory_ptr->createOperand(_Float, std::to_string(fmodf(lhs_val, rhs_val)));
 	}
 	if (type == _Double)
 	{
@@ -169,7 +169,7 @@ IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
 			std::cout << zd.what() << std::endl;
 			exit(0);
 		}
-		new_obj = new Operand<double>(std::to_string(fmod(lhs_val, rhs_val)));
+		new_obj = factory_ptr->createOperand(_Double, std::to_string(fmod(lhs_val, rhs_val)));
 	}
 	return (new_obj);
 }

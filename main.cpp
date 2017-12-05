@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "VM.h"
+
 int		main(int argc, char **argv)
 {
-
 	std::vector<std::shared_ptr<VM>>		run_vm;
 
 	if (argc == 1)
@@ -23,22 +23,16 @@ int		main(int argc, char **argv)
 	}
 	else
 	{
-		std::cout << "I need to process following files:" << std::endl;
 		for (int i = 1; i < argc; i++)
-		{
-			std::cout << argv[i] << std::endl;
 			run_vm.emplace_back(std::make_shared<VM>(VM(argv[i])));
-		}
-		for (int i = 0; i < argc - 1; i++)
+		for (int i = 0; i < run_vm.size(); i++)
 		{
-			std::cout << std::endl << "Files content:" << std::endl;
 			(*run_vm[i]).RemoveComment();
 			(*run_vm[i]).WhitesSpaceToSpace();
 			(*run_vm[i]).UniqueWhiteSpaces();
-			(*run_vm[i]).MakeInstructoinsSet();
-			std::vector<std::pair<std::string, std::string> > info = (*run_vm[i]).getInstrSet();
-			for (auto &j : info)
-				std::cout << "|" << j.first << "| - |" << j.second << "|" << std::endl;
+			(*run_vm[i]).MakeInstructionsSet();
+			(*run_vm[i]).CheckErrors();
+			(*run_vm[i]).push();
 		}
 	}
 	return (0);

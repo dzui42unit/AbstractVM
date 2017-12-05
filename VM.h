@@ -25,29 +25,39 @@
 class 													VM
 {
 private:
+	bool 												valid;
+	bool 												exit_instr;
+	std::vector<std::string>							errors;
 	std::vector<std::string>							input_file;
+	std::vector<std::string>							reg_patterns;
 	std::shared_ptr<OperandFactory>						factory;
-	std::stack< std::shared_ptr<IOperand> >				val_stack;
+	std::stack<IOperand const *>						val_stack;
+	std::vector< std::pair<std::string, bool > >		instr_set;
 	std::vector<std::pair<std::string, std::string> >	instr_args;
-	std::regex 											*pattern_n;
-	std::regex 											*pattern_z;
 
-
+	void												AssignRegexPatternsSet();
+	void												AssignInstructionsSet();
+	int 												FindInstruction(const std::string &instr);
+	int 												CheckArgument(const std::string &arg);
+	int 												CountParenthesis(const std::string &str) const;
 public:
 														VM();
 	explicit											VM(std::string f_name);
 														~VM();
 														VM(VM const &vm);
 	VM 													&operator=(VM const &vm);
-	std::vector<std::string>							FileContetnt(void) const;
-	std::string											RemoveSpaces(std::string str);
-	void												MakeInstructoinsSet(void);
+	void												push();
+	void												MakeInstructionsSet(void);
 	void												RemoveComment(void);
 	void												WhitesSpaceToSpace(void);
 	void												UniqueWhiteSpaces(void);
 	void 												RemoveBlankString(void);
-	std::vector<std::pair<std::string, std::string> >	getInstrSet() const;
 	void												SplitString(std::vector<std::string> &res, std::string str, char del);
+	void												CheckErrors();
+	void												PrintErrors() const;
+	void												CastObject(IOperand *ptr);
+	std::string											RemoveSpaces(std::string str);
+	std::vector<std::pair<std::string, std::string> >	getInstrSet() const;
 
 };
 

@@ -12,6 +12,7 @@
 
 
 #include "OperandFactory.h"
+#include "Operand.h"
 
 // constructor that initializes the vector of pointers to a member function;
 
