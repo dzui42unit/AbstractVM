@@ -29,7 +29,8 @@ private:
 	eOperandType 					SpecifyType();
 	T								AssignValue();
 	void 							CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op) const;
-	std::shared_ptr<OperandFactory> factory_ptr;
+	void							CheckRange() const;
+	static OperandFactory 			factory_ptr;
 public:
 						Operand();
 	explicit			Operand(std::string const &val);
@@ -40,13 +41,13 @@ public:
 	eOperandType 		getType(void) const override;
 	int					getPrecision(void) const override;
 	std::string const	&toString() const override;
-	void				setFactoryPtr(std::shared_ptr<OperandFactory> ptr);
 
 	IOperand const 		*operator+(IOperand const &rhs) const override;
 	IOperand const 		*operator-(IOperand const &rhs) const override;
 	IOperand const 		*operator*(IOperand const &rhs) const override;
 	IOperand const 		*operator/(IOperand const &rhs) const override;
 	IOperand const 		*operator%(IOperand const &rhs) const override;
+
 
 	class				Overflow : public std::exception
 	{

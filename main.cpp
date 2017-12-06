@@ -14,25 +14,64 @@
 
 int		main(int argc, char **argv)
 {
-	std::vector<std::shared_ptr<VM>>		run_vm;
 
 	if (argc == 1)
 	{
-		std::cout << "Please give me a file to work with." << std::endl;
-		exit(0);
+		std::shared_ptr<VM>			vm;
+		std::vector<std::string>	input_data;
+
+		std::string	buff;
+		while (buff != ";;")
+		{
+			std::getline(std::cin, buff);
+			input_data.push_back(buff);
+		}
+		vm = std::make_shared<VM>(VM(input_data));
+		try
+		{
+			vm->RemoveComment();
+			vm->WhitesSpaceToSpace();
+			vm->UniqueWhiteSpaces();
+			vm->MakeInstructionsSet();
+			vm->CheckErrors();
+			vm->RunInstructions();
+		}
+		catch (VM::SyntaxLexicalError &e)
+		{
+			std::cout << e.what() << std::endl;
+			vm->PrintErrors();
+		}
+		catch (VM::NoExit &e)
+		{
+			std::cout << e.what() << std::endl;
+		}
 	}
 	else
 	{
+		std::vector<std::shared_ptr<VM>>		run_vm;
+
 		for (int i = 1; i < argc; i++)
 			run_vm.emplace_back(std::make_shared<VM>(VM(argv[i])));
-		for (int i = 0; i < run_vm.size(); i++)
+		for (auto &i : run_vm)
 		{
-			(*run_vm[i]).RemoveComment();
-			(*run_vm[i]).WhitesSpaceToSpace();
-			(*run_vm[i]).UniqueWhiteSpaces();
-			(*run_vm[i]).MakeInstructionsSet();
-			(*run_vm[i]).CheckErrors();
-			(*run_vm[i]).push();
+			try
+			{
+				i->RemoveComment();
+				i->WhitesSpaceToSpace();
+				i->UniqueWhiteSpaces();
+				i->MakeInstructionsSet();
+				i->CheckErrors();
+				i->RunInstructions();
+			}
+			catch (VM::SyntaxLexicalError &e)
+			{
+				std::cout << e.what() << std::endl;
+				i->PrintErrors();
+			}
+			catch (VM::NoExit &e)
+			{
+				std::cout << e.what() << std::endl;
+			}
 		}
 	}
 	return (0);

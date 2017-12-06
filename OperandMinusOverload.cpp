@@ -42,7 +42,7 @@ IOperand const 		*Operand<T>::operator-(IOperand const &rhs) const
 			std::cout << of.what() << std::endl;
 			exit(0);
 		}
-		new_obj = factory_ptr->createOperand(_Int8, std::to_string(lhs_val - rhs_val));
+		new_obj = factory_ptr.createOperand(_Int8, std::to_string(lhs_val - rhs_val));
 	}
 	if (type == _Int16)
 	{
@@ -65,7 +65,7 @@ IOperand const 		*Operand<T>::operator-(IOperand const &rhs) const
 			std::cout << of.what() << std::endl;
 			exit(0);
 		}
-		new_obj = factory_ptr->createOperand(_Int16, std::to_string(lhs_val - rhs_val));
+		new_obj = factory_ptr.createOperand(_Int16, std::to_string(lhs_val - rhs_val));
 	}
 	if (type == _Int32)
 	{
@@ -88,7 +88,7 @@ IOperand const 		*Operand<T>::operator-(IOperand const &rhs) const
 			std::cout << of.what() << std::endl;
 			exit(0);
 		}
-		new_obj = factory_ptr->createOperand(_Int32, std::to_string(lhs_val - rhs_val));
+		new_obj = factory_ptr.createOperand(_Int32, std::to_string(lhs_val - rhs_val));
 	}
 	if (type == _Float)
 	{
@@ -111,7 +111,7 @@ IOperand const 		*Operand<T>::operator-(IOperand const &rhs) const
 			std::cout << of.what() << std::endl;
 			exit(0);
 		}
-		new_obj = factory_ptr->createOperand(_Float, std::to_string(lhs_val - rhs_val));
+		new_obj = factory_ptr.createOperand(_Float, std::to_string(lhs_val - rhs_val));
 	}
 	if (type == _Double)
 	{
@@ -134,7 +134,7 @@ IOperand const 		*Operand<T>::operator-(IOperand const &rhs) const
 			std::cout << of.what() << std::endl;
 			exit(0);
 		}
-		new_obj = factory_ptr->createOperand(_Double, std::to_string(lhs_val - rhs_val));
+		new_obj = factory_ptr.createOperand(_Double, std::to_string(lhs_val - rhs_val));
 	}
 	return (new_obj);
 }

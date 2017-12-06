@@ -47,7 +47,6 @@ Operand<T>			&Operand<T>::operator=(IOperand const &op)
 		this->str_val = op.toString();
 		this->precision = op.getPrecision();
 		this->value = static_cast<char>(std::stoi(op.toString()));
-		this->factory_ptr = std::make_shared<OperandFactory>(OperandFactory());
 	}
 	if (type == _Int16)
 	{
@@ -55,7 +54,6 @@ Operand<T>			&Operand<T>::operator=(IOperand const &op)
 		this->str_val = op.toString();
 		this->precision = op.getPrecision();
 		this->value = static_cast<short>(std::stoi(op.toString()));
-		this->factory_ptr = std::make_shared<OperandFactory>(OperandFactory());
 	}
 	if (type == _Int32)
 	{
@@ -63,23 +61,20 @@ Operand<T>			&Operand<T>::operator=(IOperand const &op)
 		this->str_val = op.toString();
 		this->precision = op.getPrecision();
 		this->value = std::stoi(op.toString());
-		this->factory_ptr = std::make_shared<OperandFactory>(OperandFactory());
 	}
 	if (type == _Float)
 	{
 		this->type = op.getType();
 		this->str_val = op.toString();
 		this->precision = op.getPrecision();
-		this->value = static_cast<float>(std::stoi(op.toString()));
-		this->factory_ptr = std::make_shared<OperandFactory>(OperandFactory());
+		this->value = static_cast<float>(std::stold(op.toString()));
 	}
 	if (type == _Double)
 	{
 		this->type = op.getType();
 		this->str_val = op.toString();
 		this->precision = op.getPrecision();
-		this->value = static_cast<double>(std::stoi(op.toString()));
-		this->factory_ptr = std::make_shared<OperandFactory>(OperandFactory());
+		this->value = static_cast<double>(std::stold(op.toString()));
 	}
 	return (*this);
 }

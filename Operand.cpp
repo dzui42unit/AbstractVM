@@ -12,6 +12,9 @@
 
 #include "Operand.h"
 
+template < typename  T>
+OperandFactory Operand<T>::factory_ptr;
+
 // check if the overflow can take place
 
 template 			< typename T >
@@ -114,6 +117,48 @@ eOperandType 		Operand<T>::getType() const
 	return (type);
 }
 
+// check whether the nubmer fits in range of its type
+
+template < typename T >
+void				Operand<T>::CheckRange() const
+{
+	if (type == _Int8)
+	{
+		if (std::numeric_limits<char>::min() > std::stoll(str_val))
+			throw Underflow();
+		if (std::numeric_limits<char>::max() < std::stoll(str_val))
+			throw Overflow();
+	}
+	if (type == _Int16)
+	{
+		if (std::numeric_limits<short>::min() > std::stoll(str_val))
+			throw Underflow();
+		if (std::numeric_limits<short>::max() < std::stoll(str_val))
+			throw Overflow();
+	}
+	if (type == _Int32)
+	{
+		if (std::numeric_limits<int>::min() > std::stoll(str_val))
+			throw Underflow();
+		if (std::numeric_limits<int>::max() < std::stoll(str_val))
+			throw Overflow();
+	}
+	if (type == _Float)
+	{
+		if (std::numeric_limits<float>::min() > std::stoll(str_val))
+			throw Underflow();
+		if (std::numeric_limits<float>::max() < std::stoll(str_val))
+			throw Overflow();
+	}
+	if (type == _Double)
+	{
+		if (std::numeric_limits<double>::min() > std::stold(str_val))
+			throw Underflow();
+		if (std::numeric_limits<double>::max() < std::stold(str_val))
+			throw Overflow();
+	}
+}
+
 // assigns a value taking into account its type
 
 template 			< typename T >
@@ -123,54 +168,39 @@ T 					Operand<T>::AssignValue()
 
 	try
 	{
+		int length;
+
+		CheckRange();
+		length = str_val.length();
+		if (str_val[0] == '-')
+			length--;
+		if (length > 19)
+			throw (OutOfRange());
 		if (type == _Int8)
-		{
-			if (std::numeric_limits<char>::min() < std::stoll(str_val)
-				&& std::stoll(str_val) > std::numeric_limits<char>::max())
-				throw (OutOfRange());
 			res = static_cast<char>(std::stoll(str_val));
-		}
 		if (type == _Int16)
-		{
-			if (std::numeric_limits<short>::min() < std::stoll(str_val)
-				&& std::stoll(str_val) > std::numeric_limits<short>::max())
-				throw (OutOfRange());
 			res = static_cast<short>(std::stoll(str_val));
-
-		}
 		if (type == _Int32)
-		{
-			if (std::numeric_limits<int>::min() < std::stoll(str_val)
-				&& std::stoll(str_val) > std::numeric_limits<int>::max())
-				throw (OutOfRange());
-			res = std::stoll(str_val);
-		}
+			res = static_cast<int>(std::stoll(str_val));
 		if (type == _Float)
-		{
-			if (std::numeric_limits<float>::min() < std::stold(str_val)
-				&& std::stold(str_val) > std::numeric_limits<float >::max())
-				throw (OutOfRange());
 			res = static_cast<float>(std::stold(str_val));
-
-		}
 		if (type == _Double)
-		{
-			if (std::numeric_limits<double>::min() < std::stold(str_val)
-				&& std::stold(str_val) > std::numeric_limits<double>::max())
-				throw (OutOfRange());
 			res = static_cast<double>(std::stold(str_val));
-		}
 	}
 	catch (OutOfRange &e)
 	{
 		std::cout << e.what() << std::endl;
 		exit(0);
 	}
+	catch (Overflow &e)
+	{
+		std::cout << e.what() << std::endl;
+		exit(0);
+	}
+	catch (Underflow &e)
+	{
+		std::cout << e.what() << std::endl;
+		exit(0);
+	}
 	return (res);
-}
-
-template < typename T >
-void Operand<T>::setFactoryPtr(std::shared_ptr<OperandFactory> ptr)
-{
-	this->factory_ptr = ptr;
 }
