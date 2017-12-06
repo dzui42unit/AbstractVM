@@ -1,5 +1,10 @@
 # AbstractVM
 
+In order to run it use make
+
+./avm (with no params to get theinput from standart input ";;" to stop input)
+
+./avm some_file[0] ... some_file[n];
 
 As for any assembly language, the language of AbstractVM is composed of a series of
 instructions, with one instruction per line. However, AbstractVM’s assembly language
