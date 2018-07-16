@@ -13,6 +13,106 @@
 
 #include "VM.h"
 
+// ---------------------------------------------------------------------------------------
+
+// constructor that takes a vector of strings as an input
+
+VM::VM(std::vector<std::string> inp_f)
+{
+	this->input_file = inp_f;
+	this->factory = std::make_shared<OperandFactory>(OperandFactory());
+	this->lexer = std::make_shared<Lexer>(Lexer(this->input_file));
+
+//	AssignRegexPatternsSet();
+//	AssignInstructionsSet();
+}
+
+// constructor that takes file name as a parameter
+
+VM::VM(std::string f_name)
+{
+
+	// here will be no such file exception
+
+	std::string		buff;
+	std::ifstream	inp(f_name);
+
+	if (inp.is_open())
+	{
+		while (std::getline(inp, buff))
+			input_file.push_back(buff);
+//		AssignRegexPatternsSet();
+//		AssignInstructionsSet();
+		valid = true;
+	}
+	else
+	{
+        throw (NoSuchFileException());
+	}
+
+    this->factory = std::make_shared<OperandFactory>(OperandFactory());
+    this->lexer = std::make_shared<Lexer>(Lexer(this->input_file));
+
+    inp.close();
+}
+
+// copy constructor
+
+VM::VM(VM const &vm)
+{
+
+//	valid = vm.valid;
+//	input_file = vm.input_file;
+//	val_stack = vm.val_stack;
+//	instr_set = vm.instr_set;
+//	exit_instr = vm.exit_instr;
+//	errors = vm.errors;
+//	instr_args = vm.instr_args;
+//	reg_patterns = vm.reg_patterns;
+
+	this->factory = std::make_shared<OperandFactory>(*(vm.factory));
+    this->lexer = std::make_shared<Lexer>(*(vm.lexer));
+}
+
+// assignment operator overloading
+
+VM 	&VM::operator=(VM const &vm)
+{
+	this->input_file = vm.input_file;
+
+    this->factory = std::make_shared<OperandFactory>(*(vm.factory));
+    this->lexer = std::make_shared<Lexer>(*(vm.lexer));
+
+//	valid = vm.valid;
+//	exit_instr = vm.exit_instr;
+//	errors = vm.errors;
+//	input_file = vm.input_file;
+//	val_stack = vm.val_stack;
+//	instr_set = vm.instr_set;
+//	instr_args = vm.instr_args;
+//	reg_patterns = vm.reg_patterns;
+//	factory = std::make_shared<OperandFactory>(*(vm.factory));
+//	this->lexer = std::make_shared<Lexer>(this->input);
+
+    return (*this);
+}
+
+// destructor
+
+VM::~VM()
+{
+
+}
+
+// ---------------------------------------------------------------------------------------
+
+// runs a lexical analysis of the input data
+
+void	VM::LexicalAnalysis(void)
+{
+	this->lexer->PrintLexerData();
+}
+
 // runs the VM and executes instructions
 
 void 		VM::RunInstructions()
@@ -46,7 +146,7 @@ void 		VM::RunInstructions()
 		throw NoExit();
 }
 
-// returns a type of object taking a string correspondant value
+// returns a type of object taking a string correspondent value
 
 eOperandType 	VM::FindType(std::string const &str) const
 {
@@ -63,88 +163,6 @@ eOperandType 	VM::FindType(std::string const &str) const
 	if (str == "double")
 		type = _Double;
 	return (type);
-}
-
-// default constructor
-
-VM::VM()
-{
-	factory = std::make_shared<OperandFactory>(OperandFactory());
-	AssignRegexPatternsSet();
-	AssignInstructionsSet();
-}
-
-// constructor that takes a vector of strings as an input
-
-VM::VM(std::vector<std::string> inp_f)
-{
-	factory = std::make_shared<OperandFactory>(OperandFactory());
-	AssignRegexPatternsSet();
-	AssignInstructionsSet();
-	valid = true;
-	input_file = inp_f;
-}
-
-// constructor that takes file name as a parameter
-
-VM::VM(std::string f_name)
-{
-	std::string		buff;
-	std::ifstream	inp(f_name);
-
-	if (inp.is_open())
-	{
-		while (std::getline(inp, buff))
-			input_file.push_back(buff);
-		AssignRegexPatternsSet();
-		AssignInstructionsSet();
-		valid = true;
-	}
-	else
-	{
-		std::cout << "I can't open a file." << std::endl;
-		exit(0);
-	}
-	factory = std::make_shared<OperandFactory>(OperandFactory());
-	inp.close();
-}
-
-// copy constructor
-
-VM::VM(VM const &vm)
-{
-	valid = vm.valid;
-	input_file = vm.input_file;
-	val_stack = vm.val_stack;
-	instr_set = vm.instr_set;
-	exit_instr = vm.exit_instr;
-	errors = vm.errors;
-	instr_args = vm.instr_args;
-	reg_patterns = vm.reg_patterns;
-	factory = std::make_shared<OperandFactory>(*(vm.factory));
-}
-
-// assignment operator overloading
-
-VM 	&VM::operator=(VM const &vm)
-{
-	valid = vm.valid;
-	exit_instr = vm.exit_instr;
-	errors = vm.errors;
-	input_file = vm.input_file;
-	val_stack = vm.val_stack;
-	instr_set = vm.instr_set;
-	instr_args = vm.instr_args;
-	reg_patterns = vm.reg_patterns;
-	factory = std::make_shared<OperandFactory>(*(vm.factory));
-	return (*this);
-}
-
-// destructor
-
-VM::~VM()
-{
-
 }
 
 // assigns a patterns to check the arguments of instructions

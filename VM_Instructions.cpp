@@ -23,7 +23,7 @@ void 	VM::push(std::string argument)
 	}, ' ');
 	SplitString(args, argument, ' ');
 	for (auto &elem : args)
-		elem = RemoveSpaces(elem);
+		elem = this->lexer->RemoveSpaces(elem);
 	val_stack.push_back((factory->createOperand(FindType(args[0]), args[1])));
 }
 
@@ -39,7 +39,7 @@ void 	VM::assert(std::string argument)
 	}, ' ');
 	SplitString(args, argument, ' ');
 	for (auto &elem : args)
-		elem = RemoveSpaces(elem);
+		elem = this->lexer->RemoveSpaces(elem);
 	new_one = factory->createOperand(FindType(args[0]), args[1]);
 	try
 	{

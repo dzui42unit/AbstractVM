@@ -109,33 +109,6 @@ int 	VM::FindInstruction(const std::string &instr)
 	return (-1);
 }
 
-// trims a string
-
-std::string	VM::TrimString(std::string str)
-{
-	for (size_t i = 0; i < str.length(); i++)
-	{
-		if (std::isspace(str[i]))
-		{
-			str.begin() = str.erase(str.begin() + i);
-			i = 0;
-		}
-		else
-			break ;
-	}
-	for (size_t i = str.length() - 1; i > 0; --i)
-	{
-		if (std::isspace(str[i]))
-		{
-			i = str.length() - 1;
-			str.end() = str.erase(str.begin() + i);
-		}
-		else
-			break ;
-	}
-	return (std::string(str.begin(), str.end()));
-}
-
 // fills a vector of the pairs that represents an instruction and its argument
 
 void		VM::MakeInstructionsSet(void)
@@ -145,7 +118,7 @@ void		VM::MakeInstructionsSet(void)
 	for (auto &elem : input_file)
 	{
 		SplitString(temp, elem, ' ');
-		instr_args.emplace_back(TrimString(temp[0]), TrimString(temp[1]));
+		instr_args.emplace_back(this->lexer->TrimString(temp[0]), this->lexer->TrimString(temp[1]));
 		temp.clear();
 	}
 }
@@ -193,7 +166,7 @@ void 		VM::SplitString(std::vector<std::string> &res, std::string const &str, ch
 
 	if (pos == std::string::npos)
 	{
-		res.emplace_back(RemoveSpaces(str));
+		res.emplace_back(this->lexer->RemoveSpaces(str));
 		res.emplace_back("");
 	}
 	else
@@ -201,101 +174,4 @@ void 		VM::SplitString(std::vector<std::string> &res, std::string const &str, ch
 		res.emplace_back((std::string(str.begin(), str.begin() + pos)));
 		res.emplace_back((std::string(str.begin() + pos + 1, str.end())));
 	}
-}
-
-// removes all the whitespaces that are present in the string
-
-std::string		VM::RemoveSpaces(std::string str)
-{
-	str.erase(std::remove_if(str.begin(), str.end(), [](char ch) -> bool{
-		return (std::isspace(ch));
-	}), str.end());
-	return (str);
-}
-
-// replaces each whitespace character to the ' ', if it is not a ' ' character
-
-void 						VM::WhitesSpaceToSpace()
-{
-	for (auto &elem : input_file)
-	{
-		std::replace_if(elem.begin(), elem.end(), [](char ch) -> bool {
-			return (std::isspace(ch) && (ch != ' '));
-		}, ' ');
-	}
-	RemoveBlankString();
-}
-
-// removes a comments from a string
-// comment is an occurrence of the ';' character
-
-void						VM::RemoveComment(void)
-{
-	size_t 	pos;
-
-	for (auto &elem : input_file)
-	{
-		pos = elem.find_first_of(';');
-		if (pos != std::string::npos)
-			elem.erase(elem.begin() + pos, elem.end());
-	}
-	RemoveBlankString();
-}
-
-// removes a blank strings from a vector
-
-void						VM::RemoveBlankString(void)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < input_file.size())
-	{
-		if (input_file[i].empty() || WsString(input_file[i]))
-		{
-			input_file.erase(input_file.begin() + i);
-			i = 0;
-			continue ;
-		}
-		i++;
-	}
-}
-
-// removes redundant spaces from a string
-
-void						VM::UniqueWhiteSpaces()
-{
-	size_t 					i;
-	std::string::iterator 	start;
-	std::string::iterator 	end;
-
-	for (auto &elem : input_file)
-	{
-		end = std::unique(elem.begin(), elem.end(), [](char ch1, char ch2) -> bool
-		{
-			return (std::isspace(ch1) && isspace(ch2) && (ch1 == ch2));
-		});
-		elem = std::string(elem.begin(), end);
-	}
-	i = 0;
-	RemoveBlankString();
-	while (i < input_file.size())
-	{
-		start = input_file[i].begin();
-		end = input_file[i].end() - 1;
-		input_file[i] = TrimString(std::string(start, end + 1));
-		i++;
-	}
-}
-
-// check whether the string consists only of whitespaces
-
-int 	VM::WsString(std::string const &str) const
-{
-	for (int i = 0; str[i]; i++)
-	{
-		if (!std::isspace(str[i]))
-			return (0);
-	}
-	return (1);
 }

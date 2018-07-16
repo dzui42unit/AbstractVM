@@ -12,7 +12,7 @@
 
 NAME = avm
 
-SRC =  main.cpp OperandFactory.cpp VM.cpp VM_Instructions.cpp VM_Parser.cpp
+SRC =  main.cpp OperandFactory.cpp VM.cpp VM_Instructions.cpp VM_Parser.cpp Lexer.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
