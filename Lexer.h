@@ -24,20 +24,22 @@ public:
     // remove blank strings
     // trim string
 
-    void 			RemoveBlankString(void);
-    void            PrintLexerData(void);
-    std::string 	UniqueWhiteSpaces(const std::string &str);
-    std::string     TrimString(const std::string &str);
-    std::string		RemoveSpaces(const std::string &str);
-    void			RemoveComment(void);
+    void 			            RemoveBlankString(void);
+    void                        PrintLexerData(void);
+    std::string 	            UniqueWhiteSpaces(const std::string &str);
+    std::string                 TrimString(const std::string &str);
+    std::string		            RemoveSpaces(const std::string &str);
+    void			            RemoveComment(void);
+    std::vector<std::string>    GetLexerData(void) const;
+	void						ProcessWhiteSpaces(void);
 
     // canonical form of the Lexer class
 
-                    Lexer() = delete;
-                    Lexer(const std::vector<std::string> &data);
-    Lexer           &operator=(const Lexer &lex);
-                    Lexer(const Lexer &lex);
-                    ~Lexer();
+                                Lexer() = delete;
+                                Lexer(const std::vector<std::string> &data);
+    Lexer                       &operator=(const Lexer &lex);
+                                Lexer(const Lexer &lex);
+                                ~Lexer();
 
 
 };

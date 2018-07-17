@@ -160,7 +160,7 @@ public:
 	public:
 		const char *what() const throw() override
 		{
-			return ("No such file.");
+			return ("Input file doesn't exist, no such file.");
 		}
 	};
 };

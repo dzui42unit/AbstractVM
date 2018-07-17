@@ -6,7 +6,7 @@
 #    By: dzui <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/01 15:02:50 by dzui              #+#    #+#              #
-#    Updated: 2017/12/06 19:35:10 by dzui             ###   ########.fr        #
+#    Updated: 2018/07/17 20:40:44 by dzui             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC =  main.cpp OperandFactory.cpp VM.cpp VM_Instructions.cpp VM_Parser.cpp Lexe
 
 OBJ = $(SRC:.cpp=.o)
 
-FLAGS = -Wall -Wextra -Werror -std=c++11
+FLAGS = -Wall -Wextra -Werror -std=c++14
 
 $(NAME): $(OBJ)
 		clang++ $(FLAGS) $(OBJ) -o $(NAME)

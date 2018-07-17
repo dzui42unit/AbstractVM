@@ -1,7 +1,5 @@
 #include "Lexer.h"
 
-// -----------------------------------------------------------------------------
-
 // constructor that takes an vector of strings
 
 Lexer::Lexer(const std::vector<std::string> &data)
@@ -75,8 +73,6 @@ void			Lexer::RemoveBlankString(void)
     }
 }
 
-// --------------------------------------------------------------------------------------------
-
 // replaces all whitespaces with space and makes in unique
 
 std::string     Lexer::UniqueWhiteSpaces(const std::string &str)
@@ -96,14 +92,18 @@ std::string     Lexer::UniqueWhiteSpaces(const std::string &str)
 
 std::string	    Lexer::TrimString(const std::string &str)
 {
-    std::string res;
-    size_t      pos;
-
-    res = str;
-        pos = 0;
-        while (std::isspace(res[pos]))
-            pos++;
-    return (std::string(res.begin() + pos, res.end()));
+	std::string s;
+	
+	s = str;
+	std::string::const_iterator it = s.begin();
+	while (it != s.end() && isspace(*it))
+		it++;
+	
+	std::string::const_reverse_iterator rit = s.rbegin();
+	while (rit.base() != it && isspace(*rit))
+		rit++;
+	
+	return std::string(it, rit.base());
 }
 
 // removes all spaces from a string
@@ -127,5 +127,26 @@ void	Lexer::PrintLexerData(void)
     for (auto &v : this->data_to_process)
     {
         std::cout << "|" << v << "|" << std::endl;
+    }
+}
+
+// method that returns lexer data after it was processed
+// trimmed strings, removed comments, removed blank strings, reduced spaces;
+
+std::vector<std::string>    Lexer::GetLexerData(void) const
+{
+    return (this->data_to_process);
+}
+
+// method that will process each string and will remove all whitespaces
+// replace all of them by space, makes unique
+
+void                        Lexer::ProcessWhiteSpaces(void)
+{
+    for (auto &item : this->data_to_process)
+    {
+		TrimString(item);
+		item = TrimString(item);
+        item = UniqueWhiteSpaces(item);
     }
 }

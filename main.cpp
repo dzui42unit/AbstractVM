@@ -16,36 +16,30 @@ int		main(int argc, char **argv)
 {
 
 	if (argc == 1)
-	{
-		std::shared_ptr<VM>			vm;
-		std::vector<std::string>	input_data;
+    {
+        try {
+            std::shared_ptr <VM> vm;
+            std::vector <std::string> input_data;
 
-		std::string	buff;
-		while (buff != ";;")
-		{
-			std::getline(std::cin, buff);
-			input_data.push_back(buff);
-		}
-		vm = std::make_shared<VM>(VM(input_data));
-		try
-		{
-			vm->LexicalAnalysis();
+            std::string buff;
+            while (buff != ";;") {
+                std::getline(std::cin, buff);
+                input_data.push_back(buff);
+            }
+            vm = std::make_shared<VM>(VM(input_data));
+
+            vm->LexicalAnalysis();
 //			vm->RemoveComment();
 //			vm->WhitesSpaceToSpace();
 //			vm->UniqueWhiteSpaces();
 //			vm->MakeInstructionsSet();
 //			vm->CheckErrors();
 //			vm->RunInstructions();
-		}
-		catch (VM::SyntaxLexicalError &e)
-		{
-//			std::cout << e.what() << std::endl;
-//			vm->PrintErrors();
-		}
-		catch (VM::NoExit &e)
-		{
-//			std::cout << e.what() << std::endl;
-		}
+        }
+        catch (std::exception &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
 	}
 	else
     {
@@ -64,15 +58,6 @@ int		main(int argc, char **argv)
 //				vm->CheckErrors();
 //				vm->RunInstructions();
             }
-//			catch (VM::SyntaxLexicalError &e)
-//			{
-//				std::cout << e.what() << std::endl;
-////				vm->PrintErrors();
-//			}
-//			catch (VM::NoExit &e)
-//			{
-////				std::cout << e.what() << std::endl;
-//			}
         }
         catch (std::exception &e)
         {

@@ -110,7 +110,11 @@ VM::~VM()
 
 void	VM::LexicalAnalysis(void)
 {
-	this->lexer->PrintLexerData();
+    this->lexer->PrintLexerData();
+    this->lexer->RemoveComment();
+    this->lexer->RemoveBlankString();
+	this->lexer->ProcessWhiteSpaces();
+    this->lexer->PrintLexerData();
 }
 
 // runs the VM and executes instructions
