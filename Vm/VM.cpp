@@ -115,6 +115,10 @@ void	VM::LexicalAnalysis(void)
     this->lexer->RemoveBlankString();
 	this->lexer->ProcessWhiteSpaces();
     this->lexer->PrintLexerData();
+	this->lexer->CreateTokens();
+	this->lexer->CheckLexicalErrors();
+	this->lexer->PrintTokens();
+	std::cout << "SUCCESS!!!!!" << std::endl;
 }
 
 // runs the VM and executes instructions
@@ -171,14 +175,14 @@ eOperandType 	VM::FindType(std::string const &str) const
 
 // assigns a patterns to check the arguments of instructions
 
-void 	VM::AssignRegexPatternsSet()
-{
-	reg_patterns.emplace_back(R"(int8(\s+)?[(]+(\s+)?[-]?[0-9]+(\s+)?[)]+(\s+)?)");
-	reg_patterns.emplace_back(R"(int16(\s+)?[(]+(\s+)?[-]?[0-9]+(\s+)?[)]+(\s+)?)");
-	reg_patterns.emplace_back(R"(int32(\s+)?[(]+(\s+)?[-]?[0-9]+(\s+)?[)]+(\s+)?)");
-	reg_patterns.emplace_back(R"(float(\s+)?[(]+(\s+)?[-]?[0-9]+.[0-9]+(\s+)?[)]+(\s+)?)");
-	reg_patterns.emplace_back(R"(double(\s)?[(]+(\s+)?[-]?[0-9]+.[0-9]+(\s+)?[)]+(\s+)?)");
-}
+//void 	VM::AssignRegexPatternsSet()
+//{
+//	reg_patterns.emplace_back(R"(int8(\s+)?[(]+(\s+)?[-]?[0-9]+(\s+)?[)]+(\s+)?)");
+//	reg_patterns.emplace_back(R"(int16(\s+)?[(]+(\s+)?[-]?[0-9]+(\s+)?[)]+(\s+)?)");
+//	reg_patterns.emplace_back(R"(int32(\s+)?[(]+(\s+)?[-]?[0-9]+(\s+)?[)]+(\s+)?)");
+//	reg_patterns.emplace_back(R"(float(\s+)?[(]+(\s+)?[-]?[0-9]+.[0-9]+(\s+)?[)]+(\s+)?)");
+//	reg_patterns.emplace_back(R"(double(\s)?[(]+(\s+)?[-]?[0-9]+.[0-9]+(\s+)?[)]+(\s+)?)");
+//}
 
 // assigns the set of instructions ints name and whether it takes argument or not
 

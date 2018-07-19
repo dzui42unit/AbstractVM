@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "VM.h"
+#include "Vm/VM.h"
 
 #define RED "\033[31m"
 #define YELLOW "\033[33m"
@@ -113,14 +113,14 @@ int 	VM::FindInstruction(const std::string &instr)
 
 void		VM::MakeInstructionsSet(void)
 {
-	std::vector<std::string>	temp;
-
-	for (auto &elem : input_file)
-	{
-		SplitString(temp, elem, ' ');
-		instr_args.emplace_back(this->lexer->TrimString(temp[0]), this->lexer->TrimString(temp[1]));
-		temp.clear();
-	}
+//	std::vector<std::string>	temp;
+//
+//	for (auto &elem : input_file)
+//	{
+//		SplitString(temp, elem, ' ');
+//		instr_args.emplace_back(this->lexer->TrimString(temp[0]), this->lexer->TrimString(temp[1]));
+//		temp.clear();
+//	}
 }
 
 // check the match of number of parenthesis
@@ -154,24 +154,4 @@ int 	VM::CheckArgument(const std::string &arg)
 			return (1);
 	}
 	return (0);
-}
-
-// splits a string by a delimiter and writes it in a vector
-
-void 		VM::SplitString(std::vector<std::string> &res, std::string const &str, char del)
-{
-	size_t pos;
-
-	pos = str.find_first_of(del);
-
-	if (pos == std::string::npos)
-	{
-		res.emplace_back(this->lexer->RemoveSpaces(str));
-		res.emplace_back("");
-	}
-	else
-	{
-		res.emplace_back((std::string(str.begin(), str.begin() + pos)));
-		res.emplace_back((std::string(str.begin() + pos + 1, str.end())));
-	}
 }

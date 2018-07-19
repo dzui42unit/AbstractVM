@@ -14,14 +14,14 @@
 #ifndef ABSTRACTVM_VM_H
 #define ABSTRACTVM_VM_H
 
-#include "Operand.h"
-#include "OperandFactory.h"
+#include "../Operand.h"
+#include "../OperandFactory/OperandFactory.h"
 #include <memory>
 #include <utility>
 #include <fstream>
 #include <regex>
 #include <exception>
-#include "Lexer.h"
+#include "../Lexer/Lexer.h"
 
 class 													VM
 {
@@ -93,7 +93,6 @@ public:
 	// some stuff for the parser, it will be removed from here
 
 	void												MakeInstructionsSet(void);
-	void												SplitString(std::vector<std::string> &res, std::string const &str, char del);
 	void												CheckErrors();
 	void												PrintErrors() const;
 	void												RunInstructions();

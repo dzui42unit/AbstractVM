@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "VM.h"
+#include "Vm/VM.h"
 
 // push - adds a new object of a specific type to the stack
 
@@ -21,10 +21,10 @@ void 	VM::push(std::string argument)
 	std::replace_if(argument.begin(), argument.end(), [](char ch) -> bool {
 			return (ch == '(' || ch == ')');
 	}, ' ');
-	SplitString(args, argument, ' ');
-	for (auto &elem : args)
-		elem = this->lexer->RemoveSpaces(elem);
-	val_stack.push_back((factory->createOperand(FindType(args[0]), args[1])));
+//	SplitString(args, argument, ' ');
+//	for (auto &elem : args)
+//		elem = this->lexer->RemoveSpaces(elem);
+//	val_stack.push_back((factory->createOperand(FindType(args[0]), args[1])));
 }
 
 // assert - takes a value and check whether it is equal to the value in the top of the stack
@@ -37,7 +37,7 @@ void 	VM::assert(std::string argument)
 	std::replace_if(argument.begin(), argument.end(), [](char ch) -> bool {
 		return (ch == '(' || ch == ')');
 	}, ' ');
-	SplitString(args, argument, ' ');
+//	SplitString(args, argument, ' ');
 	for (auto &elem : args)
 		elem = this->lexer->RemoveSpaces(elem);
 	new_one = factory->createOperand(FindType(args[0]), args[1]);

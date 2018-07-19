@@ -15,7 +15,7 @@
 
 #include "IOperand.h"
 #include <cmath>
-#include "OperandFactory.h"
+#include "OperandFactory/OperandFactory.h"
 #include <memory>
 
 template < typename T >

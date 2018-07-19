@@ -1,0 +1,10 @@
+	push 	
+ 	pop 	 
+	 dump	 
+ assert	 
+add
+	sub
+	mul 
+div 
+ 	mod
+print
