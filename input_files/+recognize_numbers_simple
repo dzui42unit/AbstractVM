@@ -1,0 +1,5 @@
+pop int8(2)
+pop int16(2)
+pop int32(2)
+pop float(12.34)
+pop	double(12.32)

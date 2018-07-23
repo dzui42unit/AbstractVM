@@ -115,8 +115,8 @@ void	VM::LexicalAnalysis(void)
     this->lexer->RemoveBlankString();
 	this->lexer->ProcessWhiteSpaces();
     this->lexer->PrintLexerData();
-	this->lexer->CreateTokens();
 	this->lexer->CheckLexicalErrors();
+	this->lexer->CreateTokens();
 	this->lexer->PrintTokens();
 	std::cout << "SUCCESS!!!!!" << std::endl;
 }
