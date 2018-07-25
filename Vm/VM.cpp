@@ -22,9 +22,7 @@ VM::VM(std::vector<std::string> inp_f)
 	this->input_file = inp_f;
 	this->factory = std::make_shared<OperandFactory>(OperandFactory());
 	this->lexer = std::make_shared<Lexer>(Lexer(this->input_file));
-
-//	AssignRegexPatternsSet();
-//	AssignInstructionsSet();
+	this->parser = std::make_shared<Parser>(Parser());
 }
 
 // constructor that takes file name as a parameter
@@ -41,8 +39,6 @@ VM::VM(std::string f_name)
 	{
 		while (std::getline(inp, buff))
 			input_file.push_back(buff);
-//		AssignRegexPatternsSet();
-//		AssignInstructionsSet();
 		valid = true;
 	}
 	else
@@ -52,8 +48,9 @@ VM::VM(std::string f_name)
 
     this->factory = std::make_shared<OperandFactory>(OperandFactory());
     this->lexer = std::make_shared<Lexer>(Lexer(this->input_file));
-
-    inp.close();
+	this->parser = std::make_shared<Parser>(Parser());
+	
+	inp.close();
 }
 
 // copy constructor
@@ -72,6 +69,7 @@ VM::VM(VM const &vm)
 
 	this->factory = std::make_shared<OperandFactory>(*(vm.factory));
     this->lexer = std::make_shared<Lexer>(*(vm.lexer));
+	this->parser = std::make_shared<Parser>(*(vm.parser));
 }
 
 // assignment operator overloading
@@ -82,6 +80,7 @@ VM 	&VM::operator=(VM const &vm)
 
     this->factory = std::make_shared<OperandFactory>(*(vm.factory));
     this->lexer = std::make_shared<Lexer>(*(vm.lexer));
+	this->parser = std::make_shared<Parser>(*(vm.parser));
 
 //	valid = vm.valid;
 //	exit_instr = vm.exit_instr;
@@ -106,55 +105,42 @@ VM::~VM()
 
 // ---------------------------------------------------------------------------------------
 
-// runs a lexical analysis of the input data
-
-void	VM::LexicalAnalysis(void)
-{
-    this->lexer->PrintLexerData();
-    this->lexer->RemoveComment();
-    this->lexer->RemoveBlankString();
-	this->lexer->ProcessWhiteSpaces();
-    this->lexer->PrintLexerData();
-	this->lexer->CheckLexicalErrors();
-	this->lexer->CreateTokens();
-	this->lexer->PrintTokens();
-	std::cout << "SUCCESS!!!!!" << std::endl;
-}
-
 // runs the VM and executes instructions
 
 void 		VM::RunInstructions()
 {
-	for (auto const &elem : instr_args)
-	{
-		if (elem.first == "push")
-			push(elem.second);
-		if (elem.first == "pop")
-			pop();
-		if (elem.first == "dump")
-			dump();
-		if (elem.first == "assert")
-			assert(elem.second);
-		if (elem.first == "add")
-			add();
-		if (elem.first == "sub")
-			sub();
-		if (elem.first == "mul")
-			mul();
-		if (elem.first == "div")
-			div();
-		if (elem.first == "mod")
-			mod();
-		if (elem.first == "print")
-			print();
-		if (elem.first == "exit")
-			return ;
-	}
-	if (!exit_instr)
-		throw NoExit();
+//	for (auto const &elem : instr_args)
+//	{
+//		if (elem.first == "push")
+//			push(elem.second);
+//		if (elem.first == "pop")
+//			pop();
+//		if (elem.first == "dump")
+//			dump();
+//		if (elem.first == "assert")
+//			assert(elem.second);
+//		if (elem.first == "add")
+//			add();
+//		if (elem.first == "sub")
+//			sub();
+//		if (elem.first == "mul")
+//			mul();
+//		if (elem.first == "div")
+//			div();
+//		if (elem.first == "mod")
+//			mod();
+//		if (elem.first == "print")
+//			print();
+//		if (elem.first == "exit")
+//			return ;
+//	}
+//	if (!exit_instr)
+//		throw NoExit();
 }
 
 // returns a type of object taking a string correspondent value
+// also moves to parser
+
 
 eOperandType 	VM::FindType(std::string const &str) const
 {
@@ -173,30 +159,25 @@ eOperandType 	VM::FindType(std::string const &str) const
 	return (type);
 }
 
-// assigns a patterns to check the arguments of instructions
+// runs a lexical analysis of the input data
 
-//void 	VM::AssignRegexPatternsSet()
-//{
-//	reg_patterns.emplace_back(R"(int8(\s+)?[(]+(\s+)?[-]?[0-9]+(\s+)?[)]+(\s+)?)");
-//	reg_patterns.emplace_back(R"(int16(\s+)?[(]+(\s+)?[-]?[0-9]+(\s+)?[)]+(\s+)?)");
-//	reg_patterns.emplace_back(R"(int32(\s+)?[(]+(\s+)?[-]?[0-9]+(\s+)?[)]+(\s+)?)");
-//	reg_patterns.emplace_back(R"(float(\s+)?[(]+(\s+)?[-]?[0-9]+.[0-9]+(\s+)?[)]+(\s+)?)");
-//	reg_patterns.emplace_back(R"(double(\s)?[(]+(\s+)?[-]?[0-9]+.[0-9]+(\s+)?[)]+(\s+)?)");
-//}
-
-// assigns the set of instructions ints name and whether it takes argument or not
-
-void 	VM::AssignInstructionsSet()
+void	VM::LexicalAnalysis(void)
 {
-	instr_set.emplace_back("push", true);
-	instr_set.emplace_back("pop", false);
-	instr_set.emplace_back("dump", false);
-	instr_set.emplace_back("assert", true);
-	instr_set.emplace_back("add", false);
-	instr_set.emplace_back("sub", false);
-	instr_set.emplace_back("mul", false);
-	instr_set.emplace_back("div", false);
-	instr_set.emplace_back("mod", false);
-	instr_set.emplace_back("print", false);
-	instr_set.emplace_back("exit", false);
+	this->lexer->PrintLexerData();
+	this->lexer->RemoveComment();
+	this->lexer->RemoveBlankString();
+	this->lexer->ProcessWhiteSpaces();
+	this->lexer->PrintLexerData();
+	this->lexer->CheckLexicalErrors();
+	this->lexer->CreateTokens();
+	this->lexer->PrintTokens();
+	this->tokens = this->lexer->GetLexerTokens();
+	std::cout << "SUCCESSFULL LEXICAL ANALYSIS" << std::endl;
+}
+
+// performs parsing for the tokens produced by the lexer
+
+void	VM::Parsing(void)
+{
+	std::cout << "STARTED PARSING" << std::endl;
 }

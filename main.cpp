@@ -29,11 +29,8 @@ int		main(int argc, char **argv)
             vm = std::make_shared<VM>(VM(input_data));
 
             vm->LexicalAnalysis();
-//			vm->RemoveComment();
-//			vm->WhitesSpaceToSpace();
-//			vm->UniqueWhiteSpaces();
-//			vm->MakeInstructionsSet();
-//			vm->CheckErrors();
+            vm->Parsing();
+			
 //			vm->RunInstructions();
         }
         catch (std::exception &e)
@@ -51,11 +48,7 @@ int		main(int argc, char **argv)
             for (auto &vm : run_vm)
             {
                 vm->LexicalAnalysis();
-//				vm->RemoveComment();
-//				vm->WhitesSpaceToSpace();
-//				vm->UniqueWhiteSpaces();
-//				vm->MakeInstructionsSet();
-//				vm->CheckErrors();
+                vm->Parsing();
 //				vm->RunInstructions();
             }
         }

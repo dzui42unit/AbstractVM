@@ -6,9 +6,6 @@ Lexer::Lexer(const std::vector<std::string> &data)
 {
     data_to_process = data;
 	CreateLexerPatterns();
-
-    // assign some rules, will be added soon
-    // patterns for checking
 }
 
 // copy constructor
@@ -143,9 +140,9 @@ void	Lexer::PrintLexerData(void)
 // method that returns lexer data after it was processed
 // trimmed strings, removed comments, removed blank strings, reduced spaces;
 
-std::vector<std::string>    Lexer::GetLexerData(void) const
+std::vector<std::vector<std::string>>    Lexer::GetLexerTokens(void) const
 {
-    return (this->data_to_process);
+    return (this->tokens);
 }
 
 // method that will process each string and will remove all whitespaces

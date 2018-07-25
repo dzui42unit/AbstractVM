@@ -22,6 +22,7 @@
 #include <regex>
 #include <exception>
 #include "../Lexer/Lexer.h"
+#include "../Parser/Parser.h"
 
 class 													VM
 {
@@ -38,20 +39,23 @@ private:
 
 	std::vector<std::string>							errors;
 
-	// stores input data and a stack of values
+	// stores input data and a stack of values, tokens produced by lexer
 
 	std::vector<std::string>							input_file;
 	std::vector<IOperand const *>						val_stack;
+	std::vector<std::vector<std::string>>				tokens;
 
 	// patterns and rules for lexer and parser, will be moved to the Lexer and Parser classes
 
 	std::vector<std::string>							reg_patterns;
 	std::vector< std::pair<std::string, bool > >		instr_set;
-	std::vector<std::pair<std::string, std::string> >	instr_args;
 
-	// pointers to other classes such as Factory class - produces Operands, Lexer - performs lexical analysis
-
+	// pointers to other classes such as Factory class - produces Operands
+	// Lexer - performs lexical analysis and returns set of tokens
+	// Parser - performs check of the language rules and and pushes values to the stack
+	
 	std::shared_ptr<Lexer>								lexer;
+	std::shared_ptr<Parser>								parser;
 	std::shared_ptr<OperandFactory>						factory;
 
 	// functions that will be moved to parser and lexer
@@ -76,6 +80,7 @@ public:
 	// functions for lexical analysis and a parser
 
 	void												LexicalAnalysis(void);
+	void												Parsing(void);
 
 	// instruction set
 
