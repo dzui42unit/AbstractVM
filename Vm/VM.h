@@ -43,7 +43,7 @@ private:
 
 	std::vector<std::string>							input_file;
 	std::vector<IOperand const *>						val_stack;
-	std::vector<std::vector<std::string>>				tokens;
+	std::vector<std::pair<std::string, std::string>>	tokens;
 
 	// patterns and rules for lexer and parser, will be moved to the Lexer and Parser classes
 

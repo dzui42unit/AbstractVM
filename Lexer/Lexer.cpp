@@ -140,7 +140,7 @@ void	Lexer::PrintLexerData(void)
 // method that returns lexer data after it was processed
 // trimmed strings, removed comments, removed blank strings, reduced spaces;
 
-std::vector<std::vector<std::string>>    Lexer::GetLexerTokens(void) const
+std::vector<std::pair<std::string, std::string>>    Lexer::GetLexerTokens(void) const
 {
     return (this->tokens);
 }
@@ -160,21 +160,21 @@ void                        Lexer::ProcessWhiteSpaces(void)
 
 // splits a string by a delimiter and writes it in a vector
 
-std::vector<std::string> 		Lexer::SplitString(std::string const &str, char del)
+std::pair<std::string, std::string>	Lexer::SplitString(std::string const &str, char del)
 {
-	std::vector<std::string>	res;
-	size_t 						pos;
+	std::pair<std::string, std::string>	res;
+	size_t 								pos;
 	
 	pos = str.find_first_of(del);
 	if (pos == std::string::npos)
 	{
-		res.emplace_back(str);
-		res.emplace_back("");
+		res.first = str;
+		res.second = "";
 	}
 	else
 	{
-		res.emplace_back((std::string(str.begin(), str.begin() + pos)));
-		res.emplace_back((std::string(str.begin() + pos + 1, str.end())));
+		res.first = std::string(str.begin(), str.begin() + pos);
+		res.second = std::string(str.begin() + pos + 1, str.end());
 	}
 	return (res);
 }
@@ -186,8 +186,10 @@ void							Lexer::CreateTokens(void)
 	for (auto elem : this->data_to_process)
 		this->tokens.emplace_back(SplitString(elem, ' '));
 	for (auto elem : this->tokens)
-		for (auto elem2 : elem)
-			elem2 = TrimString(elem2);
+	{
+		elem.first = TrimString(elem.first);
+		elem.second = TrimString(elem.second);
+	}
 }
 
 // prints tokens produced by lexer
@@ -197,11 +199,7 @@ void							Lexer::PrintTokens(void)
 	std::cout << "PRODUCED TOKENS" << std::endl;
 	for (auto elem : this->tokens)
 	{
-		for (auto elem2 : elem)
-		{
-			std::cout << "|" << elem2 << "|";
-		}
-		std::cout << std::endl;
+			std::cout << "|" << elem.first << "|" << " |" << elem.second << std::endl;
 	}
 }
 
@@ -216,9 +214,10 @@ void							Lexer::CreateLexerPatterns(void)
 	std::string pattern_3 = std::string("(int16[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)|");
 	std::string pattern_4 = std::string("(int32[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)|");
 	std::string pattern_5 = std::string("(float[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+[.][0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)|");
-	std::string pattern_6 = std::string("(double[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+[.][0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)){0,1}");
+	std::string pattern_6 = std::string("(double[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+[.][0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)|");
+	std::string pattern_7 = std::string("(push|pop|dump|assert|add|sub|mul|div|mod|print|exit)?(\\s+)?)){0,1}");
 	
-	this->regex_patterns = std::regex(pattern_1 + pattern_2 + pattern_3 + pattern_4 + pattern_5 + pattern_6);
+	this->regex_patterns = std::regex(pattern_1 + pattern_2 + pattern_3 + pattern_4 + pattern_5 + pattern_6 + pattern_7);
 }
 
 // check if the tokens are valid, or throw an exception in case of error
@@ -241,6 +240,7 @@ void							Lexer::CheckLexicalErrors(void)
 			error_log.emplace_back("LINE: " + std::to_string(i + 1) + " |" + data_to_process[i] + "| HAS UNDEFINED TOKEN");
 	}
 	
+	// here will be printing of all the errors, and throwing of the exception
 	
 	if (!error_log.empty())
 	{
@@ -248,7 +248,5 @@ void							Lexer::CheckLexicalErrors(void)
 			std::cout << elem << std::endl;
 		throw LexicalErrorsException();
 	}
-	
-	// here will be printing of all the errors, and throwing of the exception
 	
 }

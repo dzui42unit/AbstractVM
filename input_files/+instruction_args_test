@@ -1,0 +1,11 @@
+	push int8(8)
+ 	pop
+	 dump
+ assert int8(8)
+add
+	sub
+	mul
+div
+ 	mod
+print
+exit

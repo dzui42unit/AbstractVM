@@ -1,0 +1,7 @@
+push push
+push pop
+push assert
+push exit
+push pop
+push add
+push sub

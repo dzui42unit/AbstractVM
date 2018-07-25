@@ -180,4 +180,6 @@ void	VM::LexicalAnalysis(void)
 void	VM::Parsing(void)
 {
 	std::cout << "STARTED PARSING" << std::endl;
+	this->parser->SetTokensList(this->tokens);
+	this->parser->PerformInstructionArgumentCheck();
 }

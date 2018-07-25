@@ -15,10 +15,11 @@
 class Lexer
 {
 private:
-    std::vector<std::string>    			data_to_process;
-	std::regex								regex_patterns;
-	std::vector<std::vector<std::string>>	tokens;
-	std::vector<std::string>				error_log;
+    std::vector<std::string>    						data_to_process;
+	std::regex											regex_patterns;
+//	std::vector<std::vector<std::string>>	tokens;
+	std::vector<std::pair<std::string, std::string>>	tokens;
+	std::vector<std::string>							error_log;
 public:
 
     // methods for manipulating input data
@@ -27,20 +28,20 @@ public:
     // remove blank strings
     // trim string
 
-	void									CreateLexerPatterns(void);
-    void 			            			RemoveBlankString(void);
-    void                        			PrintLexerData(void);
-    void			            			RemoveComment(void);
-	void									ProcessWhiteSpaces(void);
-	void									CreateTokens(void);
-	void									PrintTokens(void);
-	bool									ValidateToken(const std::string &check_token);
-	void									CheckLexicalErrors(void);
-	std::vector<std::string>				SplitString(std::string const &str, char del);
-	std::string 	            			UniqueWhiteSpaces(const std::string &str);
-	std::string                 			TrimString(const std::string &str);
-	std::string		            			RemoveSpaces(const std::string &str);
-	std::vector<std::vector<std::string>>   GetLexerTokens(void) const;
+	void												CreateLexerPatterns(void);
+    void 			            						RemoveBlankString(void);
+    void                        						PrintLexerData(void);
+    void			            						RemoveComment(void);
+	void												ProcessWhiteSpaces(void);
+	void												CreateTokens(void);
+	void												PrintTokens(void);
+	bool												ValidateToken(const std::string &check_token);
+	void												CheckLexicalErrors(void);
+	std::pair<std::string, std::string>					SplitString(std::string const &str, char del);
+	std::string 	            						UniqueWhiteSpaces(const std::string &str);
+	std::string                 						TrimString(const std::string &str);
+	std::string		            						RemoveSpaces(const std::string &str);
+	std::vector<std::pair<std::string, std::string>>	GetLexerTokens(void) const;
 	
 	
 	// canonical form of the Lexer class
