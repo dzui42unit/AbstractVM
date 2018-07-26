@@ -1,0 +1,8 @@
+push		exit
+assert		pop
+
+push		push
+assert		pop
+
+push		assert
+assert		assert

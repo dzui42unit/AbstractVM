@@ -1,0 +1,8 @@
+push		int8(123132)
+assert		int16(23423)
+
+push		int32((((122))))
+assert		int32(((	(	23423 ) 	 	) 	))
+
+push		double(( (  (123.132)	)))
+assert		float(23.423)

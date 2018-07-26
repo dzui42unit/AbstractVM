@@ -1,10 +1,13 @@
 #include "Parser.h"
 
-// default constructor
+// error codes for the parser
 
 const int Parser::NOT_PASSED_NEED_ARG = 1;
 const int Parser::PASSED_NOT_NEED_ARG = 2;
 const int Parser::INVALID_ARGUMENT = 3;
+const int Parser::PARENTHESIS_ERROR = 4;
+
+// default constructor
 
 Parser::Parser()
 {
@@ -108,11 +111,13 @@ int 	Parser::CountParenthesis(const std::string &str) const
 			counter--;
 		i++;
 	}
-	return (counter);
+	if (counter != 0)
+		return (Parser::PARENTHESIS_ERROR);
+	return (0);
 }
 
-// method that goes through all tokens and checks for the correspondace between instruction
-// and the argument it recieved
+// method that goes through all tokens and checks for the correspondence between instruction
+// and the argument it received
 
 void	Parser::PerformInstructionArgumentCheck(void)
 {
@@ -125,8 +130,6 @@ void	Parser::PerformInstructionArgumentCheck(void)
 		error_code = CheckInstructionMatchParameter(tokens[i]);
 		if (!error_code)
 		{
-			std::cout << tokens[i].first << " MATCHED " << std::endl;
-			
 			// check if passed argument matches allowed one
 			
 			if (!tokens[i].second.empty())
@@ -134,29 +137,38 @@ void	Parser::PerformInstructionArgumentCheck(void)
 				error_code = CheckPassedArgument(tokens[i].second);
 				if (!error_code)
 				{
-					// here will be the continuation of the checks
+					// check the second argument for the number of closed and opened parenthesis
+					// it means that the argument is valid, it is one of the listed one
+					
+					error_code = CountParenthesis(tokens[i].second);
+					
+					// it means that the number of parenthesis is invalid '(' != ')'
+					
+					if (error_code == Parser::PARENTHESIS_ERROR)
+						error_log.emplace_back("Line: " + std::to_string(i + 1) + " " + tokens[i].second + " number of '(' does not match ')'");
+					
 				}
 				if (error_code == Parser::INVALID_ARGUMENT)
-					error_log.emplace_back("LINE: " + std::to_string(i + 1) + " |" + tokens[i].first + "| HAS TAKEN INVALID ARGUMENT " + tokens[i].second);
+					error_log.emplace_back("Line: " + std::to_string(i + 1) + " instruction \"" + tokens[i].first + "\" has received invalid argument \"" + tokens[i].second + "\"");
 			}
 		}
 		if (error_code == Parser::PASSED_NOT_NEED_ARG)
-			error_log.emplace_back("LINE: " + std::to_string(i + 1) + " |" + tokens[i].first + "| DOES NOT TAKE AN ARGUMENT");
+			error_log.emplace_back("Line: " + std::to_string(i + 1) + " instruction \"" + tokens[i].first + "\" received redundant argument");
 		if (error_code == Parser::NOT_PASSED_NEED_ARG)
-			error_log.emplace_back("LINE: " + std::to_string(i + 1) + " |" + tokens[i].first + "| NEEDS AN ARGUMENT PASSED");
+			error_log.emplace_back("Line: " + std::to_string(i + 1) + " instruction \"" + tokens[i].first + "\" requires argument to pe passed");
 	}
+	
+	// print errors and pass and throw an exception
 	
 	if (!error_log.empty())
 	{
 		for (auto error : error_log)
-		{
 			std::cout << error << std::endl;
-		}
 		throw (ParserErrorException());
 	}
 }
 
-// method that checks correspondance of instruction
+// method that checks correspondence of instruction
 // and whether it needs argument or not
 
 int 	Parser::CheckInstructionMatchParameter(const std::pair<std::string, std::string> &instr_arg)
@@ -197,4 +209,21 @@ int		Parser::CheckPassedArgument(const std::string &argument)
 	if (std::regex_match(argument, arguments_patterns))
 		return (0);
 	return (Parser::INVALID_ARGUMENT);
+}
+
+// a method that will prepare arguments for further processing
+// will reduce the number of '(' and')'
+
+void	Parser::PrepareArgumentForProcessing(void)
+{
+	for (auto elem : tokens)
+	{
+		std::replace_if(elem.second.begin(), elem.second.end(), [](char ch) -> bool {
+			return ((ch == '(') || (ch == ')'));
+		}, ' ');
+		auto end = std::unique(elem.second.begin(), elem.second.end(), [](char l, char r){
+			return std::isspace(l) && std::isspace(r) && l == r;
+		});
+		elem.second.erase(end, elem.second.end());
+	}
 }

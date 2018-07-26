@@ -7,6 +7,8 @@
 #include <utility>
 #include <iostream>
 
+#define RED "\033[31m"
+
 class Parser
 {
 	// some private fields
@@ -22,6 +24,7 @@ private:
 	static const int									PASSED_NOT_NEED_ARG;
 	static const int									NOT_PASSED_NEED_ARG;
 	static const int									INVALID_ARGUMENT;
+	static const int									PARENTHESIS_ERROR;
 	
 public:
 	
@@ -41,6 +44,7 @@ public:
 	void	PerformInstructionArgumentCheck(void);
 	int		CheckInstructionMatchParameter(const std::pair<std::string, std::string> &instr_arg);
 	int		CheckPassedArgument(const std::string &argument);
+	void	PrepareArgumentForProcessing(void);
 	
 	//	setters and getters
 	
@@ -64,9 +68,9 @@ public:
  	- if mismatch | instr | | arg needed| - error instr takes argument						+
  	- if mismatch | instr | | arg no needed | - error instr does not take argument			+
  	
- 2. check the argument
- 	- if it does not match any of the patters - error, passed invalid argument
- 3. check the correspondance between '(' and ')', number of opened == number of closed
+ 2. check the argument																		+
+ 	- if it does not match any of the patters - error, passed invalid argument				+
+ 3. check the correspondance between '(' and ')', number of opened == number of closed		+
  
 */
 

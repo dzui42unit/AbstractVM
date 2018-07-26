@@ -237,10 +237,10 @@ void							Lexer::CheckLexicalErrors(void)
 	for (size_t i = 0; i < data_to_process.size(); i++)
 	{
 		if (!data_to_process[i].empty() && !ValidateToken(data_to_process[i]))
-			error_log.emplace_back("LINE: " + std::to_string(i + 1) + " |" + data_to_process[i] + "| HAS UNDEFINED TOKEN");
+			error_log.emplace_back("Line: " + std::to_string(i + 1) + " " + data_to_process[i] + " - undefined token");
 	}
 	
-	// here will be printing of all the errors, and throwing of the exception
+	// printing of all the errors, and throwing of the exception
 	
 	if (!error_log.empty())
 	{

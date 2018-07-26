@@ -13,8 +13,6 @@
 
 #include "VM.h"
 
-// ---------------------------------------------------------------------------------------
-
 // constructor that takes a vector of strings as an input
 
 VM::VM(std::vector<std::string> inp_f)
@@ -42,9 +40,7 @@ VM::VM(std::string f_name)
 		valid = true;
 	}
 	else
-	{
         throw (NoSuchFileException());
-	}
 
     this->factory = std::make_shared<OperandFactory>(OperandFactory());
     this->lexer = std::make_shared<Lexer>(Lexer(this->input_file));
@@ -57,41 +53,19 @@ VM::VM(std::string f_name)
 
 VM::VM(VM const &vm)
 {
-
-//	valid = vm.valid;
-//	input_file = vm.input_file;
-//	val_stack = vm.val_stack;
-//	instr_set = vm.instr_set;
-//	exit_instr = vm.exit_instr;
-//	errors = vm.errors;
-//	instr_args = vm.instr_args;
-//	reg_patterns = vm.reg_patterns;
-
 	this->factory = std::make_shared<OperandFactory>(*(vm.factory));
     this->lexer = std::make_shared<Lexer>(*(vm.lexer));
 	this->parser = std::make_shared<Parser>(*(vm.parser));
 }
 
-// assignment operator overloading
+// copy assignment operator overloading
 
 VM 	&VM::operator=(VM const &vm)
 {
 	this->input_file = vm.input_file;
-
     this->factory = std::make_shared<OperandFactory>(*(vm.factory));
     this->lexer = std::make_shared<Lexer>(*(vm.lexer));
 	this->parser = std::make_shared<Parser>(*(vm.parser));
-
-//	valid = vm.valid;
-//	exit_instr = vm.exit_instr;
-//	errors = vm.errors;
-//	input_file = vm.input_file;
-//	val_stack = vm.val_stack;
-//	instr_set = vm.instr_set;
-//	instr_args = vm.instr_args;
-//	reg_patterns = vm.reg_patterns;
-//	factory = std::make_shared<OperandFactory>(*(vm.factory));
-//	this->lexer = std::make_shared<Lexer>(this->input);
 
     return (*this);
 }
@@ -163,23 +137,19 @@ eOperandType 	VM::FindType(std::string const &str) const
 
 void	VM::LexicalAnalysis(void)
 {
-	this->lexer->PrintLexerData();
 	this->lexer->RemoveComment();
 	this->lexer->RemoveBlankString();
 	this->lexer->ProcessWhiteSpaces();
-	this->lexer->PrintLexerData();
 	this->lexer->CheckLexicalErrors();
 	this->lexer->CreateTokens();
-	this->lexer->PrintTokens();
 	this->tokens = this->lexer->GetLexerTokens();
-	std::cout << "SUCCESSFULL LEXICAL ANALYSIS" << std::endl;
 }
 
 // performs parsing for the tokens produced by the lexer
 
 void	VM::Parsing(void)
 {
-	std::cout << "STARTED PARSING" << std::endl;
 	this->parser->SetTokensList(this->tokens);
 	this->parser->PerformInstructionArgumentCheck();
+	this->parser->PrepareArgumentForProcessing();
 }

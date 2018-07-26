@@ -5,6 +5,8 @@
 #ifndef ABSTRACTVM_LEXER_H
 #define ABSTRACTVM_LEXER_H
 
+#define YELLOW "\033[33m"
+
 #include <iostream>
 #include <vector>
 #include <regex>
@@ -17,7 +19,6 @@ class Lexer
 private:
     std::vector<std::string>    						data_to_process;
 	std::regex											regex_patterns;
-//	std::vector<std::vector<std::string>>	tokens;
 	std::vector<std::pair<std::string, std::string>>	tokens;
 	std::vector<std::string>							error_log;
 public:
@@ -46,11 +47,11 @@ public:
 	
 	// canonical form of the Lexer class
 
-                                			Lexer() = delete;
-                                			Lexer(const std::vector<std::string> &data);
-    Lexer                      		 		&operator=(const Lexer &lex);
-                                			Lexer(const Lexer &lex);
-                                			~Lexer();
+                                						Lexer() = delete;
+                                						Lexer(const std::vector<std::string> &data);
+    Lexer                      		 					&operator=(const Lexer &lex);
+                                						Lexer(const Lexer &lex);
+                                						~Lexer();
 	
 	// custom written exceptions for the lexer
 	
