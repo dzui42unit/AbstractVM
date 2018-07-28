@@ -14,13 +14,14 @@
 #ifndef ABSTRACTVM_VM_H
 #define ABSTRACTVM_VM_H
 
-#include "../Operand.h"
-#include "../OperandFactory/OperandFactory.h"
 #include <memory>
 #include <utility>
 #include <fstream>
 #include <regex>
 #include <exception>
+
+#include "../Operand.h"
+#include "../OperandFactory/OperandFactory.h"
 #include "../Lexer/Lexer.h"
 #include "../Parser/Parser.h"
 
@@ -60,11 +61,11 @@ private:
 
 	// functions that will be moved to parser and lexer
 
-	void												AssignRegexPatternsSet();
-	void												AssignInstructionsSet();
-	int 												FindInstruction(const std::string &instr);
-	int 												CheckArgument(const std::string &arg);
-	int 												CountParenthesis(const std::string &str) const;
+//	void												AssignRegexPatternsSet();
+//	void												AssignInstructionsSet();
+//	int 												FindInstruction(const std::string &instr);
+//	int 												CheckArgument(const std::string &arg);
+//	int 												CountParenthesis(const std::string &str) const;
 
 public:
 
@@ -97,9 +98,9 @@ public:
 
 	// some stuff for the parser, it will be removed from here
 
-	void												MakeInstructionsSet(void);
-	void												CheckErrors();
-	void												PrintErrors() const;
+//	void												MakeInstructionsSet(void);
+//	void												CheckErrors();
+//	void												PrintErrors() const;
 	void												RunInstructions();
 	eOperandType 										FindType(std::string const &str) const;
 
@@ -168,6 +169,5 @@ public:
 		}
 	};
 };
-
 
 #endif //ABSTRACTVM_VM_H

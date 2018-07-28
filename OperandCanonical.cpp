@@ -18,9 +18,9 @@ template 			< typename T >
 Operand<T>::Operand(Operand const &op)
 {
 	value = op.value;
-	precision = op.precision;
-	type = op.type;
 	str_val = op.str_val;
+	type = op.type;
+	precision = op.precision;
 	this->factory_ptr = op.factory_ptr;
 }
 

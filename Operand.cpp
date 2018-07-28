@@ -117,7 +117,7 @@ eOperandType 		Operand<T>::getType() const
 	return (type);
 }
 
-// check whether the nubmer fits in range of its type
+// check whether the number fits in range of its type
 
 template < typename T >
 void				Operand<T>::CheckRange() const
@@ -166,41 +166,23 @@ T 					Operand<T>::AssignValue()
 {
 	T res;
 
-	try
-	{
-		int length;
+	int length;
 
-		CheckRange();
-		length = str_val.length();
-		if (str_val[0] == '-')
-			length--;
-		if (length > 19)
-			throw (OutOfRange());
-		if (type == _Int8)
-			res = static_cast<char>(std::stoll(str_val));
-		if (type == _Int16)
-			res = static_cast<short>(std::stoll(str_val));
-		if (type == _Int32)
-			res = static_cast<int>(std::stoll(str_val));
-		if (type == _Float)
-			res = static_cast<float>(std::stold(str_val));
-		if (type == _Double)
-			res = static_cast<double>(std::stold(str_val));
-	}
-	catch (OutOfRange &e)
-	{
-		std::cout << e.what() << std::endl;
-		exit(0);
-	}
-	catch (Overflow &e)
-	{
-		std::cout << e.what() << std::endl;
-		exit(0);
-	}
-	catch (Underflow &e)
-	{
-		std::cout << e.what() << std::endl;
-		exit(0);
-	}
+	CheckRange();
+	length = str_val.length();
+	if (str_val[0] == '-')
+		length--;
+	if (length > 19)
+		throw (OutOfRange());
+	if (type == _Int8)
+		res = static_cast<char>(std::stoll(str_val));
+	if (type == _Int16)
+		res = static_cast<short>(std::stoll(str_val));
+	if (type == _Int32)
+		res = static_cast<int>(std::stoll(str_val));
+	if (type == _Float)
+		res = static_cast<float>(std::stold(str_val));
+	if (type == _Double)
+		res = static_cast<double>(std::stold(str_val));
 	return (res);
 }

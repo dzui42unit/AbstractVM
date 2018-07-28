@@ -227,3 +227,10 @@ void	Parser::PrepareArgumentForProcessing(void)
 		elem.second.erase(end, elem.second.end());
 	}
 }
+
+// method that returns the data after the parser finished its work
+
+std::vector<std::pair<std::string, std::string>>	Parser::GetParserTokens(void) const
+{
+	return (this->tokens);
+}

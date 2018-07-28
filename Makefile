@@ -6,13 +6,13 @@
 #    By: dzui <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/01 15:02:50 by dzui              #+#    #+#              #
-#    Updated: 2018/07/24 20:14:55 by dzui             ###   ########.fr        #
+#    Updated: 2018/07/28 12:40:03 by dzui             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = avm
 
-SRC =  main.cpp OperandFactory/OperandFactory.cpp Vm/VM.cpp VM_Instructions.cpp VM_Parser.cpp Lexer/Lexer.cpp Parser/Parser.cpp
+SRC =  main.cpp OperandFactory/OperandFactory.cpp Vm/VM.cpp VM_Instructions.cpp Lexer/Lexer.cpp Parser/Parser.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

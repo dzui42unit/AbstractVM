@@ -40,7 +40,7 @@ void 	VM::assert(std::string argument)
 //	std::replace_if(argument.begin(), argument.end(), [](char ch) -> bool {
 //		return (ch == '(' || ch == ')');
 //	}, ' ');
-////	SplitString(args, argument, ' ');
+//	SplitString(args, argument, ' ');
 //	for (auto &elem : args)
 //		elem = this->lexer->RemoveSpaces(elem);
 //	new_one = factory->createOperand(FindType(args[0]), args[1]);

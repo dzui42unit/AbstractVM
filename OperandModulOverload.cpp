@@ -26,29 +26,12 @@ IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
 		char lhs_val;
 		char rhs_val;
 
-		try
-		{
-			lhs_val = static_cast<char>(std::stoi(this->toString()));
-			rhs_val = static_cast<char>(std::stoi(rhs.toString()));
-			if (rhs_val == 0)
-				throw (ZeroMod());
-			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mod);
-		}
-		catch (Underflow &uf)
-		{
-			std::cout << uf.what() << std::endl;
-			exit(0);
-		}
-		catch (Overflow &of)
-		{
-			std::cout << of.what() << std::endl;
-			exit(0);
-		}
-		catch (ZeroMod &zd)
-		{
-			std::cout << zd.what() << std::endl;
-			exit(0);
-		}
+		lhs_val = static_cast<char>(std::stoi(this->toString()));
+		rhs_val = static_cast<char>(std::stoi(rhs.toString()));
+		if (rhs_val == 0)
+			throw (ZeroMod());
+		Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mod);
+		
 		new_obj = factory_ptr.createOperand(_Int8, std::to_string(lhs_val % rhs_val));
 	}
 	if (type == _Int16)
@@ -56,29 +39,11 @@ IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
 		short lhs_val;
 		short rhs_val;
 
-		try
-		{
-			lhs_val = static_cast<short>(std::stoi(this->toString()));
-			rhs_val = static_cast<short>(std::stoi(rhs.toString()));
-			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mod);
-			if (rhs_val == 0)
-				throw (ZeroMod());
-		}
-		catch (Underflow &uf)
-		{
-			std::cout << uf.what() << std::endl;
-			exit(0);
-		}
-		catch (Overflow &of)
-		{
-			std::cout << of.what() << std::endl;
-			exit(0);
-		}
-		catch (ZeroMod &zd)
-		{
-			std::cout << zd.what() << std::endl;
-			exit(0);
-		}
+		lhs_val = static_cast<short>(std::stoi(this->toString()));
+		rhs_val = static_cast<short>(std::stoi(rhs.toString()));
+		Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mod);
+		if (rhs_val == 0)
+			throw (ZeroMod());
 		new_obj = factory_ptr.createOperand(_Int16, std::to_string(lhs_val % rhs_val));
 	}
 	if (type == _Int32)
@@ -86,29 +51,12 @@ IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
 		int lhs_val;
 		int rhs_val;
 
-		try
-		{
-			lhs_val = std::stoi(this->toString());
-			rhs_val = std::stoi(rhs.toString());
-			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mod);
-			if (rhs_val == 0)
-				throw (ZeroMod());
-		}
-		catch (Underflow &uf)
-		{
-			std::cout << uf.what() << std::endl;
-			exit(0);
-		}
-		catch (Overflow &of)
-		{
-			std::cout << of.what() << std::endl;
-			exit(0);
-		}
-		catch (ZeroMod &zd)
-		{
-			std::cout << zd.what() << std::endl;
-			exit(0);
-		}
+		lhs_val = std::stoi(this->toString());
+		rhs_val = std::stoi(rhs.toString());
+		Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mod);
+		if (rhs_val == 0)
+			throw (ZeroMod());
+		
 		new_obj = factory_ptr.createOperand(_Int32, std::to_string(lhs_val % rhs_val));
 	}
 	if (type == _Float)
@@ -116,59 +64,25 @@ IOperand const 		*Operand<T>::operator%(IOperand const &rhs) const
 		float lhs_val;
 		float rhs_val;
 
-		try
-		{
-			lhs_val = std::stof(this->toString());
-			rhs_val = std::stof(rhs.toString());
-			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mod);
-			if (rhs_val == 0)
-				throw (ZeroMod());
-		}
-		catch (Underflow &uf)
-		{
-			std::cout << uf.what() << std::endl;
-			exit(0);
-		}
-		catch (Overflow &of)
-		{
-			std::cout << of.what() << std::endl;
-			exit(0);
-		}
-		catch (ZeroMod &zd)
-		{
-			std::cout << zd.what() << std::endl;
-			exit(0);
-		}
+		lhs_val = std::stof(this->toString());
+		rhs_val = std::stof(rhs.toString());
+		Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mod);
+		if (rhs_val == 0)
+			throw (ZeroMod());
+		
 		new_obj = factory_ptr.createOperand(_Float, std::to_string(fmodf(lhs_val, rhs_val)));
 	}
 	if (type == _Double)
 	{
 		double lhs_val;
 		double rhs_val;
-
-		try
-		{
-			lhs_val = std::stod(this->toString());
-			rhs_val = std::stod(rhs.toString());
-			Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mod);
-			if (rhs_val == 0)
-				throw (ZeroMod());
-		}
-		catch (Underflow &uf)
-		{
-			std::cout << uf.what() << std::endl;
-			exit(0);
-		}
-		catch (Overflow &of)
-		{
-			std::cout << of.what() << std::endl;
-			exit(0);
-		}
-		catch (ZeroMod &zd)
-		{
-			std::cout << zd.what() << std::endl;
-			exit(0);
-		}
+		
+		lhs_val = std::stod(this->toString());
+		rhs_val = std::stod(rhs.toString());
+		Operand<T>::CheckOverUnderFlowOperation(lhs_val, rhs_val, Mod);
+		if (rhs_val == 0)
+			throw (ZeroMod());
+		
 		new_obj = factory_ptr.createOperand(_Double, std::to_string(fmod(lhs_val, rhs_val)));
 	}
 	return (new_obj);

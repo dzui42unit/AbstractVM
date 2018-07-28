@@ -22,75 +22,97 @@ template < typename T >
 class Operand : public IOperand
 {
 private:
+	
 	T 								value;
-	int 							precision;
-	eOperandType 					type;
-	std::string						str_val;
-	eOperandType 					SpecifyType();
 	T								AssignValue();
+	std::string						str_val;
+	eOperandType 					type;
+	eOperandType 					SpecifyType();
+	
+	int 							precision;
 	void 							CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op) const;
 	void							CheckRange() const;
 	static OperandFactory 			factory_ptr;
+	
 public:
+	
+	// canonical form of a class
+	
 						Operand();
 	explicit			Operand(std::string const &val);
 						Operand(Operand const &op);
 						~Operand() override;
 	Operand<T>			&operator=(IOperand const &op);
-
-	eOperandType 		getType(void) const override;
+	
+	// methods for getting type precision, its string representation, and get type
+	
 	int					getPrecision(void) const override;
+	eOperandType 		getType(void) const override;
 	std::string const	&toString() const override;
 
+	// operators overloading for all the mathematical operations
+	
 	IOperand const 		*operator+(IOperand const &rhs) const override;
 	IOperand const 		*operator-(IOperand const &rhs) const override;
 	IOperand const 		*operator*(IOperand const &rhs) const override;
 	IOperand const 		*operator/(IOperand const &rhs) const override;
 	IOperand const 		*operator%(IOperand const &rhs) const override;
 
+	// exceptions classes
 
+	// type overflow exception
+	
 	class				Overflow : public std::exception
 	{
 	public:
 		const char 	*what() const throw() override
 		{
-			return ("Type Overflow occurred.");
+			return ("Type overflow exception");
 		}
 
 	};
 
+	// type underflow exception
+	
 	class				Underflow : public std::exception
 	{
 	public:
 		const char 	*what() const throw() override
 		{
-			return ("Type Underflow occurred.");
+			return ("Type underflow exception");
 		}
 	};
 
+	// zero division exception
+	
 	class				ZeroDiv : public std::exception
 	{
 	public:
 		const char 	*what() const throw() override
 		{
-			return ("Zero as a second argument in division operation occurred.");
+			return ("Zero division exception");
 		}
 	};
 
+	// zero modulus operation exception
+	
 	class				ZeroMod : public std::exception
 	{
 	public:
 		const char 	*what() const throw() override
 		{
-			return ("Zero as a second argument in modulus operation occurred.");
+			return ("Zero modulus exception");
 		}
 	};
+	
+	// out of range exception
+	
 	class				OutOfRange : public std::exception
 	{
 	public:
 		const char 	*what() const throw() override
 		{
-			return ("Out of range exception occurred.");
+			return ("Out of range exception");
 		}
 	};
 };

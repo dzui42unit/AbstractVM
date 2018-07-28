@@ -46,10 +46,11 @@ public:
 	int		CheckPassedArgument(const std::string &argument);
 	void	PrepareArgumentForProcessing(void);
 	
+	
 	//	setters and getters
 	
-	void	SetTokensList(const std::vector<std::pair<std::string, std::string>> &tokens);
-
+	void												SetTokensList(const std::vector<std::pair<std::string, std::string>> &tokens);
+	std::vector<std::pair<std::string, std::string>>	GetParserTokens(void) const;
 	// some exceptions
 	
 	class	ParserErrorException : public std::exception

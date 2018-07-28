@@ -152,4 +152,5 @@ void	VM::Parsing(void)
 	this->parser->SetTokensList(this->tokens);
 	this->parser->PerformInstructionArgumentCheck();
 	this->parser->PrepareArgumentForProcessing();
+	this->tokens = this->parser->GetParserTokens();
 }
