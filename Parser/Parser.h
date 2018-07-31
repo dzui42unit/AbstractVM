@@ -14,6 +14,7 @@ class Parser
 	// some private fields
 	
 private:
+
 	std::vector<std::pair<std::string, std::string>> 	tokens;
 	std::vector<std::pair<std::string, bool>>			instruction_argument;
 	std::regex											arguments_patterns;
@@ -45,6 +46,7 @@ public:
 	int		CheckInstructionMatchParameter(const std::pair<std::string, std::string> &instr_arg);
 	int		CheckPassedArgument(const std::string &argument);
 	void	PrepareArgumentForProcessing(void);
+
 	
 	
 	//	setters and getters

@@ -29,13 +29,6 @@ class 													VM
 {
 private:
 
-	// some variables, most part of them will be moved
-
-	// booleans that indicate valid data is or not and presence of exit instruction
-
-	bool 												valid;
-	bool 												exit_instr;
-
 	// stores all the errors
 
 	std::vector<std::string>							errors;
@@ -46,11 +39,6 @@ private:
 	std::vector<IOperand const *>						val_stack;
 	std::vector<std::pair<std::string, std::string>>	tokens;
 
-	// patterns and rules for lexer and parser, will be moved to the Lexer and Parser classes
-
-	std::vector<std::string>							reg_patterns;
-	std::vector< std::pair<std::string, bool > >		instr_set;
-
 	// pointers to other classes such as Factory class - produces Operands
 	// Lexer - performs lexical analysis and returns set of tokens
 	// Parser - performs check of the language rules and and pushes values to the stack
@@ -58,14 +46,6 @@ private:
 	std::shared_ptr<Lexer>								lexer;
 	std::shared_ptr<Parser>								parser;
 	std::shared_ptr<OperandFactory>						factory;
-
-	// functions that will be moved to parser and lexer
-
-//	void												AssignRegexPatternsSet();
-//	void												AssignInstructionsSet();
-//	int 												FindInstruction(const std::string &instr);
-//	int 												CheckArgument(const std::string &arg);
-//	int 												CountParenthesis(const std::string &str) const;
 
 public:
 
@@ -82,6 +62,7 @@ public:
 
 	void												LexicalAnalysis(void);
 	void												Parsing(void);
+    void                                                PrintTokens(void) const;
 
 	// instruction set
 
@@ -98,9 +79,6 @@ public:
 
 	// some stuff for the parser, it will be removed from here
 
-//	void												MakeInstructionsSet(void);
-//	void												CheckErrors();
-//	void												PrintErrors() const;
 	void												RunInstructions();
 	eOperandType 										FindType(std::string const &str) const;
 

@@ -30,6 +30,7 @@ int		main(int argc, char **argv)
 
             vm->LexicalAnalysis();
             vm->Parsing();
+            vm->PrintTokens();
 			
 //			vm->RunInstructions();
         }
@@ -49,6 +50,7 @@ int		main(int argc, char **argv)
             {
                 vm->LexicalAnalysis();
                 vm->Parsing();
+                vm->PrintTokens();
 //				vm->RunInstructions();
             }
         }

@@ -216,7 +216,7 @@ int		Parser::CheckPassedArgument(const std::string &argument)
 
 void	Parser::PrepareArgumentForProcessing(void)
 {
-	for (auto elem : tokens)
+	for (auto &elem : tokens)
 	{
 		std::replace_if(elem.second.begin(), elem.second.end(), [](char ch) -> bool {
 			return ((ch == '(') || (ch == ')'));
@@ -225,6 +225,7 @@ void	Parser::PrepareArgumentForProcessing(void)
 			return std::isspace(l) && std::isspace(r) && l == r;
 		});
 		elem.second.erase(end, elem.second.end());
+        elem.second.pop_back();
 	}
 }
 

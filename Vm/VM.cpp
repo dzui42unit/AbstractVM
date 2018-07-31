@@ -37,7 +37,6 @@ VM::VM(std::string f_name)
 	{
 		while (std::getline(inp, buff))
 			input_file.push_back(buff);
-		valid = true;
 	}
 	else
         throw (NoSuchFileException());
@@ -83,33 +82,32 @@ VM::~VM()
 
 void 		VM::RunInstructions()
 {
-//	for (auto const &elem : instr_args)
-//	{
-//		if (elem.first == "push")
-//			push(elem.second);
-//		if (elem.first == "pop")
-//			pop();
-//		if (elem.first == "dump")
-//			dump();
-//		if (elem.first == "assert")
-//			assert(elem.second);
-//		if (elem.first == "add")
-//			add();
-//		if (elem.first == "sub")
-//			sub();
-//		if (elem.first == "mul")
-//			mul();
-//		if (elem.first == "div")
-//			div();
-//		if (elem.first == "mod")
-//			mod();
-//		if (elem.first == "print")
-//			print();
-//		if (elem.first == "exit")
-//			return ;
-//	}
-//	if (!exit_instr)
-//		throw NoExit();
+	for (auto const &elem : tokens)
+	{
+		if (elem.first == "push")
+			push(elem.second);
+		if (elem.first == "pop")
+			pop();
+		if (elem.first == "dump")
+			dump();
+		if (elem.first == "assert")
+			assert(elem.second);
+		if (elem.first == "add")
+			add();
+		if (elem.first == "sub")
+			sub();
+		if (elem.first == "mul")
+			mul();
+		if (elem.first == "div")
+			div();
+		if (elem.first == "mod")
+			mod();
+		if (elem.first == "print")
+			print();
+		if (elem.first == "exit")
+			return ;
+	}
+    throw NoExit();
 }
 
 // returns a type of object taking a string correspondent value
@@ -142,7 +140,6 @@ void	VM::LexicalAnalysis(void)
 	this->lexer->ProcessWhiteSpaces();
 	this->lexer->CheckLexicalErrors();
 	this->lexer->CreateTokens();
-	this->lexer->PrintTokens();
 	this->tokens = this->lexer->GetLexerTokens();
 }
 
@@ -154,4 +151,15 @@ void	VM::Parsing(void)
 	this->parser->PerformInstructionArgumentCheck();
 	this->parser->PrepareArgumentForProcessing();
 	this->tokens = this->parser->GetParserTokens();
+
+}
+
+// method that prints tokens
+
+void	VM::PrintTokens(void) const
+{
+    std::cout << "TOKENS BEFORE RUNNING INSTRUCTIONS" << std::endl;
+
+	for (auto const &elem : tokens)
+		std::cout << "|" << elem.first << "|\t|" << elem.second << "|" << std::endl;
 }
