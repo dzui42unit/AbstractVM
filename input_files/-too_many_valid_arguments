@@ -1,0 +1,5 @@
+push int8(2) int8(((5))) float(((12.34))    ) int32(2)
+push int16(2) int8(2) double( (       ( 12.32)))
+push int32(2) double( (       ( 12.32)))
+push float(((12.34))    ) int32(2)
+push	double( (       ( 12.32)))

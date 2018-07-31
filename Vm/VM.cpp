@@ -142,6 +142,7 @@ void	VM::LexicalAnalysis(void)
 	this->lexer->ProcessWhiteSpaces();
 	this->lexer->CheckLexicalErrors();
 	this->lexer->CreateTokens();
+	this->lexer->PrintTokens();
 	this->tokens = this->lexer->GetLexerTokens();
 }
 

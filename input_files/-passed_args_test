@@ -1,4 +1,8 @@
-push		exit
+push
+pop
+assert
+
+push		exit push
 assert		pop
 
 push		push

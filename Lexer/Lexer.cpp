@@ -209,15 +209,14 @@ void							Lexer::CreateLexerPatterns(void)
 {
 	// patterns for lexical analysis
 	
-	std::string pattern_1 = std::string("((push|pop|dump|assert|add|sub|mul|div|mod|print|exit)?(\\s+)?)?");
-	std::string pattern_2 = std::string("((int8[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)|");
+	std::string pattern_1 = std::string("(((\\s+)?(push|pop|dump|assert|add|sub|mul|div|mod|print|exit)(\\s+)?)*)");
+	std::string pattern_2 = std::string("(((\\s+)?(int8[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)|");
 	std::string pattern_3 = std::string("(int16[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)|");
 	std::string pattern_4 = std::string("(int32[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)|");
 	std::string pattern_5 = std::string("(float[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+[.][0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)|");
-	std::string pattern_6 = std::string("(double[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+[.][0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)|");
-	std::string pattern_7 = std::string("(push|pop|dump|assert|add|sub|mul|div|mod|print|exit)?(\\s+)?)){0,1}");
-	
-	this->regex_patterns = std::regex(pattern_1 + pattern_2 + pattern_3 + pattern_4 + pattern_5 + pattern_6 + pattern_7);
+	std::string pattern_6 = std::string("(double[(]+(\\s+)?((\\s+)[(]+(\\s+)?){0,}[-]?[0-9]+[.][0-9]+((\\s+)?[)]+(\\s+)){0,}(\\s+)?[)]+(\\s+)?)(\\s+)?)*)");
+
+	this->regex_patterns = std::regex(pattern_1 + pattern_2 + pattern_3 + pattern_4 + pattern_5 + pattern_6);
 }
 
 // check if the tokens are valid, or throw an exception in case of error
@@ -236,6 +235,7 @@ void							Lexer::CheckLexicalErrors(void)
 {
 	for (size_t i = 0; i < data_to_process.size(); i++)
 	{
+		std::cout << "|" << data_to_process[i] << "|" << std::endl;
 		if (!data_to_process[i].empty() && !ValidateToken(data_to_process[i]))
 			error_log.emplace_back("Line: " + std::to_string(i + 1) + " " + data_to_process[i] + " - undefined token");
 	}
