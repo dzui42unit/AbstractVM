@@ -1,5 +1,9 @@
 push   int32(42)
-push   int32(33)
+push   int8(42)
+push   int16(42)
+push    float(340282346638528859811704183484516925440.000000)
+push   int32(2147483648)
+push   int32(999999999999999999999999999)
 add
  push  					float(44.55)
 mul
@@ -8,4 +12,5 @@ push int32(42)
 dump
  pop 	 	 	
 assert 		 	double(42.42)
+push   double(1797693.000000)
 exit

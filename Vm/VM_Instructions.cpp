@@ -10,20 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Vm/VM.h"
+#include "VM.h"
 
 // push - adds a new object of a specific type to the stack
 
-void 	VM::push(std::string argument)
+void 	VM::push(const std::string &argument)
 {
-	std::cout << argument << std::endl;
-//	std::vector<std::string> 	args;
-//
-//	std::replace_if(argument.begin(), argument.end(), [](char ch) -> bool {
-//			return (ch == '(' || ch == ')');
-//	}, ' ');
-//	SplitString(args, argument, ' ');
-//	val_stack.push_back((factory->createOperand(FindType(args[0]), args[1])));
+    std::pair<std::string, std::string> 	args;
+
+    args = this->lexer->SplitString(argument, ' ');
+    std::cout <<  "|" << args.first << "| |" << args.second << "|" << std::endl;
+	stack.push_back((factory->createOperand(FindType(args.first), args.second)));
 }
 
 // assert - takes a value and check whether it is equal to the value in the top of the stack

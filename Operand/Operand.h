@@ -15,8 +15,9 @@
 
 #include "IOperand.h"
 #include <cmath>
-#include "OperandFactory/OperandFactory.h"
+#include "../OperandFactory/OperandFactory.h"
 #include <memory>
+#include <typeinfo>
 
 template < typename T >
 class Operand : public IOperand
@@ -33,6 +34,7 @@ private:
 	void 							CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op) const;
 	void							CheckRange() const;
 	static OperandFactory 			factory_ptr;
+    void                            PrintRanges(void) const;
 	
 public:
 	

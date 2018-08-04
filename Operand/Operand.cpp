@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "Operand.h"
+#include <iomanip>
+#include <limits.h>
+#include <algorithm>
 
 template < typename  T>
 OperandFactory Operand<T>::factory_ptr;
@@ -124,39 +127,59 @@ void				Operand<T>::CheckRange() const
 {
 	if (type == _Int8)
 	{
-		if (std::numeric_limits<char>::min() > std::stoll(str_val))
+		if (std::numeric_limits<char>::lowest() > std::stoll(str_val))
 			throw Underflow();
 		if (std::numeric_limits<char>::max() < std::stoll(str_val))
 			throw Overflow();
 	}
 	if (type == _Int16)
 	{
-		if (std::numeric_limits<short>::min() > std::stoll(str_val))
+		if (std::numeric_limits<short>::lowest() > std::stoll(str_val))
 			throw Underflow();
 		if (std::numeric_limits<short>::max() < std::stoll(str_val))
 			throw Overflow();
 	}
 	if (type == _Int32)
 	{
-		if (std::numeric_limits<int>::min() > std::stoll(str_val))
+		if (std::numeric_limits<int>::lowest() > std::stoll(str_val))
 			throw Underflow();
 		if (std::numeric_limits<int>::max() < std::stoll(str_val))
 			throw Overflow();
 	}
 	if (type == _Float)
 	{
-		if (std::numeric_limits<float>::min() > std::stoll(str_val))
+		if (std::numeric_limits<float>::lowest() > std::stold(str_val))
 			throw Underflow();
-		if (std::numeric_limits<float>::max() < std::stoll(str_val))
+		if (std::numeric_limits<float>::max() < std::stold(str_val))
 			throw Overflow();
 	}
 	if (type == _Double)
 	{
-		if (std::numeric_limits<double>::min() > std::stold(str_val))
+		if (std::numeric_limits<double>::lowest() > std::stold(str_val))
 			throw Underflow();
 		if (std::numeric_limits<double>::max() < std::stold(str_val))
 			throw Overflow();
 	}
+}
+
+template 		    < typename T >
+void                Operand<T>::PrintRanges(void) const
+{
+    std::cout.setf(std::ios::fixed);
+    std::cout << "CHAR_MIN: " << static_cast<int>(std::numeric_limits<char>::lowest()) << std::endl;
+    std::cout << "CHAR_MAX: " << static_cast<int>(std::numeric_limits<char>::max()) << std::endl << std::endl;
+    std::cout.setf(std::ios::fixed);
+    std::cout << "SHORT_MIN: " << std::numeric_limits<short>::lowest() << std::endl;
+    std::cout << "SHORT_MAX: " << std::numeric_limits<short>::max() << std::endl << std::endl;
+    std::cout.setf(std::ios::fixed);
+    std::cout << "INT_MIN: " << std::numeric_limits<int>::lowest() << std::endl;
+    std::cout << "INT_MAX: " << std::numeric_limits<int>::max() << std::endl << std::endl;
+    std::cout.setf(std::ios::fixed);
+    std::cout << "FLOAT_MIN: " << std::numeric_limits<float>::lowest() << std::endl;
+    std::cout << "FLOAT_MAX: " << std::numeric_limits<float>::max() << std::endl << std::endl;
+    std::cout.setf(std::ios::fixed);
+    std::cout << "DOUBLE_MIN: " << std::numeric_limits<double>::lowest() << std::endl;
+    std::cout << "DOUBLE_MAX: " << std::numeric_limits<double>::max() << std::endl << std::endl;
 }
 
 // assigns a value taking into account its type
@@ -164,25 +187,46 @@ void				Operand<T>::CheckRange() const
 template 			< typename T >
 T 					Operand<T>::AssignValue()
 {
-	T res;
+	T result = 0.0;
+    char    under_over_flow = 2;
 
-	int length;
+    if (this->str_val[0] == '-')
+        under_over_flow = 0;
+    if (this->str_val[0] != '-')
+        under_over_flow = 1;
+    try
+    {
+        if (this->type == _Int8 || this->type == _Int16
+            || this->type == _Int32)
+            std::stoi(this->str_val);
+        if (this->type == _Float)
+            std::stof(this->str_val);
+        if (this->type == _Double)
+            std::stod(this->str_val);
+    }
+    catch (std::exception &e)
+    {
+        if (under_over_flow == 0)
+                throw (Underflow());
+        if (under_over_flow == 1)
+                throw (Overflow());
+    }
+    CheckRange();
 
-	CheckRange();
-	length = str_val.length();
-	if (str_val[0] == '-')
-		length--;
-	if (length > 19)
-		throw (OutOfRange());
-	if (type == _Int8)
-		res = static_cast<char>(std::stoll(str_val));
-	if (type == _Int16)
-		res = static_cast<short>(std::stoll(str_val));
-	if (type == _Int32)
-		res = static_cast<int>(std::stoll(str_val));
-	if (type == _Float)
-		res = static_cast<float>(std::stold(str_val));
-	if (type == _Double)
-		res = static_cast<double>(std::stold(str_val));
-	return (res);
+//	length = str_val.length();
+//	if (str_val[0] == '-')
+//		length--;
+//	if (length > 19)
+//		throw (OutOfRange());
+//	if (type == _Int8)
+//		res = static_cast<char>(std::stoll(str_val));
+//	if (type == _Int16)
+//		res = static_cast<short>(std::stoll(str_val));
+//	if (type == _Int32)
+//		res = static_cast<int>(std::stoll(str_val));
+//	if (type == _Float)
+//		res = static_cast<float>(std::stold(str_val));
+//	if (type == _Double)
+//		res = static_cast<double>(std::stold(str_val));
+	return (result);
 }

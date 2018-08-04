@@ -43,7 +43,7 @@ void			Lexer::RemoveComment(void)
     {
         pos = elem.find(';');
         if (pos != std::string::npos) {
-            std::cout << elem << std::endl;
+//            std::cout << elem << std::endl;
             elem.erase(elem.begin() + pos, elem.end());
         }
     }

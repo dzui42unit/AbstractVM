@@ -13,7 +13,7 @@
 #ifndef ABSTRACTVM_OPERANDFACTORY_H
 #define ABSTRACTVM_OPERANDFACTORY_H
 
-#include "../IOperand.h"
+#include "../Operand/IOperand.h"
 
 class								OperandFactory
 {

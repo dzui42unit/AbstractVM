@@ -86,28 +86,31 @@ void 		VM::RunInstructions()
 	{
 		if (elem.first == "push")
 			push(elem.second);
-		if (elem.first == "pop")
-			pop();
-		if (elem.first == "dump")
-			dump();
-		if (elem.first == "assert")
-			assert(elem.second);
-		if (elem.first == "add")
-			add();
-		if (elem.first == "sub")
-			sub();
-		if (elem.first == "mul")
-			mul();
-		if (elem.first == "div")
-			div();
-		if (elem.first == "mod")
-			mod();
-		if (elem.first == "print")
-			print();
-		if (elem.first == "exit")
-			return ;
+//		if (elem.first == "pop")
+//			pop();
+//		if (elem.first == "dump")
+//			dump();
+//		if (elem.first == "assert")
+//			assert(elem.second);
+//		if (elem.first == "add")
+//			add();
+//		if (elem.first == "sub")
+//			sub();
+//		if (elem.first == "mul")
+//			mul();
+//		if (elem.first == "div")
+//			div();
+//		if (elem.first == "mod")
+//			mod();
+//		if (elem.first == "print")
+//			print();
+//		if (elem.first == "exit")
+//			return ;
 	}
-    throw NoExit();
+
+	// if exit instruction was not fo
+
+//    throw NoExit();
 }
 
 // returns a type of object taking a string correspondent value
@@ -151,7 +154,6 @@ void	VM::Parsing(void)
 	this->parser->PerformInstructionArgumentCheck();
 	this->parser->PrepareArgumentForProcessing();
 	this->tokens = this->parser->GetParserTokens();
-
 }
 
 // method that prints tokens

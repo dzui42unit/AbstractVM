@@ -20,7 +20,7 @@
 #include <regex>
 #include <exception>
 
-#include "../Operand.h"
+#include "../Operand/Operand.h"
 #include "../OperandFactory/OperandFactory.h"
 #include "../Lexer/Lexer.h"
 #include "../Parser/Parser.h"
@@ -36,7 +36,7 @@ private:
 	// stores input data and a stack of values, tokens produced by lexer
 
 	std::vector<std::string>							input_file;
-	std::vector<IOperand const *>						val_stack;
+	std::vector<IOperand const *>						stack;
 	std::vector<std::pair<std::string, std::string>>	tokens;
 
 	// pointers to other classes such as Factory class - produces Operands
@@ -66,7 +66,7 @@ public:
 
 	// instruction set
 
-	void												push(std::string argument);
+	void												push(const std::string &argument);
 	void												dump() const;
 	void												add();
 	void												pop();
