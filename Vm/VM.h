@@ -47,6 +47,8 @@ private:
 	std::shared_ptr<Parser>								parser;
 	std::shared_ptr<OperandFactory>						factory;
 
+    std::string                                         removeZero(const std::string &str) const;
+
 public:
 
 	// constructors (default, copy, copy assignment operator)

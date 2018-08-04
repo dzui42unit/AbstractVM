@@ -86,31 +86,30 @@ void 		VM::RunInstructions()
 	{
 		if (elem.first == "push")
 			push(elem.second);
-//		if (elem.first == "pop")
-//			pop();
-//		if (elem.first == "dump")
-//			dump();
-//		if (elem.first == "assert")
-//			assert(elem.second);
-//		if (elem.first == "add")
-//			add();
-//		if (elem.first == "sub")
-//			sub();
-//		if (elem.first == "mul")
-//			mul();
-//		if (elem.first == "div")
-//			div();
-//		if (elem.first == "mod")
-//			mod();
-//		if (elem.first == "print")
-//			print();
-//		if (elem.first == "exit")
-//			return ;
+		if (elem.first == "pop")
+			pop();
+		if (elem.first == "dump")
+			dump();
+		if (elem.first == "assert")
+			assert(elem.second);
+		if (elem.first == "add")
+			add();
+		if (elem.first == "sub")
+			sub();
+		if (elem.first == "mul")
+			mul();
+		if (elem.first == "div")
+			div();
+		if (elem.first == "mod")
+			mod();
+		if (elem.first == "print")
+			print();
+		if (elem.first == "exit")
+			return ;
 	}
 
-	// if exit instruction was not fo
-
-//    throw NoExit();
+	// if exit instruction was not found
+    throw NoExit();
 }
 
 // returns a type of object taking a string correspondent value
@@ -164,4 +163,13 @@ void	VM::PrintTokens(void) const
 
 	for (auto const &elem : tokens)
 		std::cout << "|" << elem.first << "|\t|" << elem.second << "|" << std::endl;
+}
+
+std::string      VM::removeZero(const std::string &str) const
+{
+    std::string res;
+
+    res = str;
+    res.erase (res.find_last_not_of('0') + 1, std::string::npos );
+    return res;
 }

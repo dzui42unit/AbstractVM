@@ -43,7 +43,6 @@ void			Lexer::RemoveComment(void)
     {
         pos = elem.find(';');
         if (pos != std::string::npos) {
-//            std::cout << elem << std::endl;
             elem.erase(elem.begin() + pos, elem.end());
         }
     }
@@ -235,7 +234,6 @@ void							Lexer::CheckLexicalErrors(void)
 {
 	for (size_t i = 0; i < data_to_process.size(); i++)
 	{
-		std::cout << "|" << data_to_process[i] << "|" << std::endl;
 		if (!data_to_process[i].empty() && !ValidateToken(data_to_process[i]))
 			error_log.emplace_back("Line: " + std::to_string(i + 1) + " " + data_to_process[i] + " - undefined token");
 	}

@@ -30,7 +30,6 @@ int		main(int argc, char **argv)
 
             vm->LexicalAnalysis();
             vm->Parsing();
-//            vm->PrintTokens();
 			vm->RunInstructions();
         }
         catch (std::exception &e)
@@ -49,7 +48,6 @@ int		main(int argc, char **argv)
             {
                 vm->LexicalAnalysis();
                 vm->Parsing();
-//                vm->PrintTokens();
 				vm->RunInstructions();
             }
         }

@@ -32,7 +32,7 @@ void 				Operand<T>::CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op
 		}
 		else
 		{
-			if (std::numeric_limits<T>::min() - nb1 >= nb2)
+			if (std::numeric_limits<T>::lowest() - nb1 >= nb2)
 				throw (Underflow());
 		}
 	}
@@ -45,33 +45,33 @@ void 				Operand<T>::CheckOverUnderFlowOperation(T nb1, T nb2, eOperationType op
 		}
 		else
 		{
-			if (std::numeric_limits<T>::min() + nb2 > nb1)
+			if (std::numeric_limits<T>::lowest() + nb2 > nb1)
 				throw (Underflow());
 		}
 	}
 	if (op == Mul)
 	{
-		if (nb1 == -1 && (nb2 == std::numeric_limits<T>::min()))
+		if (nb1 == -1 && (nb2 == std::numeric_limits<T>::lowest()))
 			throw (Underflow());
-		if (nb2 == -1 && (nb1 == std::numeric_limits<T>::min()))
+		if (nb2 == -1 && (nb1 == std::numeric_limits<T>::lowest()))
 			throw (Underflow());
 		if (nb1 > std::numeric_limits<T>::max() / nb2)
 			throw (Overflow());
-		if (nb1 < std::numeric_limits<T>::min() / nb2)
+		if (nb1 < std::numeric_limits<T>::lowest() / nb2)
 			throw (Underflow());
 	}
 	if (op == Div)
 	{
-		if (nb1 == -1 && nb2 == std::numeric_limits<T>::min())
+		if (nb1 == -1 && nb2 == std::numeric_limits<T>::lowest())
 			throw (Underflow());
-		if (nb2 == -1 && nb1 == std::numeric_limits<T>::min())
+		if (nb2 == -1 && nb1 == std::numeric_limits<T>::lowest())
 			throw (Underflow());
 	}
 	if (op == Mod)
 	{
-		if (nb1 == -1 && nb2 == std::numeric_limits<T>::min())
+		if (nb1 == -1 && nb2 == std::numeric_limits<T>::lowest())
 			throw (Underflow());
-		if (nb2 == -1 && nb1 == std::numeric_limits<T>::min())
+		if (nb2 == -1 && nb1 == std::numeric_limits<T>::lowest())
 			throw (Underflow());
 	}
 }
@@ -187,7 +187,7 @@ void                Operand<T>::PrintRanges(void) const
 template 			< typename T >
 T 					Operand<T>::AssignValue()
 {
-	T result = 0.0;
+	T       result = 0;
     char    under_over_flow = 2;
 
     if (this->str_val[0] == '-')
@@ -198,11 +198,11 @@ T 					Operand<T>::AssignValue()
     {
         if (this->type == _Int8 || this->type == _Int16
             || this->type == _Int32)
-            std::stoi(this->str_val);
+            result = std::stoi(this->str_val);
         if (this->type == _Float)
-            std::stof(this->str_val);
+            result = std::stof(this->str_val);
         if (this->type == _Double)
-            std::stod(this->str_val);
+            result = std::stod(this->str_val);
     }
     catch (std::exception &e)
     {
@@ -212,21 +212,5 @@ T 					Operand<T>::AssignValue()
                 throw (Overflow());
     }
     CheckRange();
-
-//	length = str_val.length();
-//	if (str_val[0] == '-')
-//		length--;
-//	if (length > 19)
-//		throw (OutOfRange());
-//	if (type == _Int8)
-//		res = static_cast<char>(std::stoll(str_val));
-//	if (type == _Int16)
-//		res = static_cast<short>(std::stoll(str_val));
-//	if (type == _Int32)
-//		res = static_cast<int>(std::stoll(str_val));
-//	if (type == _Float)
-//		res = static_cast<float>(std::stold(str_val));
-//	if (type == _Double)
-//		res = static_cast<double>(std::stold(str_val));
 	return (result);
 }
