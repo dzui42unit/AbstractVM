@@ -6,7 +6,7 @@
 /*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 16:10:43 by dzui              #+#    #+#             */
-/*   Updated: 2017/12/06 16:10:45 by dzui             ###   ########.fr       */
+/*   Updated: 2018/08/05 12:55:01 by dzui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,12 @@ void 	VM::pop()
 void	VM::dump() const
 {
 	for (auto i = stack.rbegin(); i != stack.rend(); i++)
-		std::cout << removeZero((*i)->toString()) << std::endl;
+    {
+        if ((*i)->toString().find_first_of(".") != std::string::npos)
+            std::cout << removeZero((*i)->toString()) << std::endl;
+        else
+            std::cout << (*i)->toString() << std::endl;
+    }
 }
 
 // add - takes two objects from a stack and add them and the resulting object pushes back in stack
